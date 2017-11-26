@@ -43,7 +43,7 @@ public class MoviesActivity extends AppCompatActivity {
             setupDrawerContent(nvDrawer);
         }
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
         if (viewPager != null) {
             setupViewPager(viewPager);
         }
