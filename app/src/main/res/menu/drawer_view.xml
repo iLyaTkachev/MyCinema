@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/movies_navigation_menu_item"
+            android:icon="@drawable/ic_movie"
+            android:title="Movies" />
+        <item
+            android:id="@+id/tv_shows_navigation_menu_item"
+            android:icon="@drawable/ic_live_tv"
+            android:title="TV Shows" />
+        <item
+            android:id="@+id/people_navigation_menu_item"
+            android:icon="@drawable/ic_people"
+            android:title="People" />
+        <item
+            android:id="@+id/favourites_navigation_menu_item"
+            android:icon="@drawable/ic_stars"
+            android:title="Favourites" />
+        <item
+            android:id="@+id/my_lists_navigation_menu_item"
+            android:icon="@drawable/ic_folder_shared"
+            android:title="My Lists" />
+    </group>
+
+    <item android:title="Settings">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/account_navigation_menu_item"
+                    android:icon="@drawable/ic_account_box"
+                    android:title="Account" />
+                <item
+                    android:id="@+id/advanced_navigation_menu_item"
+                    android:icon="@drawable/ic_build"
+                    android:title="Advanced" />
+            </group>
+        </menu>
+    </item>
+</menu>
