@@ -1,9 +1,11 @@
-package ilyatkachev.github.com.mycinema;
+package ilyatkachev.github.com.mycinema.movies;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends AppCompatActivity {
+import ilyatkachev.github.com.mycinema.R;
+
+public class MoviesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
