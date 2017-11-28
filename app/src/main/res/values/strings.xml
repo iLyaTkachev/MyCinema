@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">MyCinema</string>
+    <string name="popular_tab">popular</string>
+    <string name="in_theaters_tab">in theaters</string>
+    <string name="upcoming_tab">upcoming</string>
+    <string name="empty_string"/>
+    <string name="movies_activity_title">Movies</string>
+    <string name="like_card_action">Like</string>
+    <string name="add_card_action">Add</string>
+    <string name="movies_nav_item">Movies</string>
+    <string name="tv_shows_nav_item">TV Shows</string>
+    <string name="people_nav_item">People</string>
+    <string name="favorites_nav_item">Favorites</string>
+    <string name="my_lists_nav_item">My Lists</string>
+    <string name="settings_nav_group">Settings</string>
+    <string name="account_nav_item">Account</string>
+    <string name="advanced_nav_item">Advanced</string>
+    <string name="search_appbar_action">Search</string>
 </resources>

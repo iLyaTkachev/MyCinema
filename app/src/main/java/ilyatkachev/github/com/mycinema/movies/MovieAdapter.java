@@ -15,16 +15,16 @@ import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     private List<IMovie> mMovies;
-    LayoutInflater mLayoutInflater;
+    Context mContext;
 
     public MovieAdapter(Context pContext, List<IMovie> pMovies) {
         mMovies = pMovies;
-        mLayoutInflater = LayoutInflater.from(pContext);
+        mContext = pContext;
     }
 
     @Override
     public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.movie_card, parent, false);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.movie_card, parent, false);
         return new MovieHolder(view);
     }
 

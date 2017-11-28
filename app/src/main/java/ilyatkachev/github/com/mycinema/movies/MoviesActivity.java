@@ -13,6 +13,7 @@ import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import ilyatkachev.github.com.mycinema.R;
@@ -29,10 +30,9 @@ public class MoviesActivity extends AppCompatActivity {
 
         // Set up the custom toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        if (toolbar != null) {
+            setupToolbar(toolbar);
+        }
 
         // Set up the navigation drawer.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -64,6 +64,16 @@ public class MoviesActivity extends AppCompatActivity {
                 });
     }
 
+    private void setupToolbar(Toolbar pToolbar) {
+        pToolbar.setTitle(R.string.empty_string);
+        TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(R.string.movies_activity_title);
+        setSupportActionBar(pToolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.appbar_actions, menu);
@@ -91,9 +101,9 @@ public class MoviesActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MovieListFragment(), "Category 1");
-        adapter.addFragment(new MovieListFragment(), "Category 2");
-        adapter.addFragment(new MovieListFragment(), "Category 3");
+        adapter.addFragment(new MovieListFragment(), getString(R.string.popular_tab));
+        adapter.addFragment(new MovieListFragment(), getString(R.string.in_theaters_tab));
+        adapter.addFragment(new MovieListFragment(), getString(R.string.upcoming_tab));
         viewPager.setAdapter(adapter);
     }
 

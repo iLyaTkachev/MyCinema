@@ -4,36 +4,36 @@
         <item
             android:id="@+id/movies_navigation_menu_item"
             android:icon="@drawable/ic_movie"
-            android:title="Movies" />
+            android:title="@string/movies_nav_item" />
         <item
             android:id="@+id/tv_shows_navigation_menu_item"
             android:icon="@drawable/ic_live_tv"
-            android:title="TV Shows" />
+            android:title="@string/tv_shows_nav_item" />
         <item
             android:id="@+id/people_navigation_menu_item"
             android:icon="@drawable/ic_people"
-            android:title="People" />
+            android:title="@string/people_nav_item" />
         <item
             android:id="@+id/favourites_navigation_menu_item"
             android:icon="@drawable/ic_stars"
-            android:title="Favourites" />
+            android:title="@string/favorites_nav_item" />
         <item
             android:id="@+id/my_lists_navigation_menu_item"
             android:icon="@drawable/ic_folder_shared"
-            android:title="My Lists" />
+            android:title="@string/my_lists_nav_item" />
     </group>
 
-    <item android:title="Settings">
+    <item android:title="@string/settings_nav_group">
         <menu>
             <group android:checkableBehavior="single">
                 <item
                     android:id="@+id/account_navigation_menu_item"
                     android:icon="@drawable/ic_account_box"
-                    android:title="Account" />
+                    android:title="@string/account_nav_item" />
                 <item
                     android:id="@+id/advanced_navigation_menu_item"
                     android:icon="@drawable/ic_build"
-                    android:title="Advanced" />
+                    android:title="@string/advanced_nav_item" />
             </group>
         </menu>
     </item>
