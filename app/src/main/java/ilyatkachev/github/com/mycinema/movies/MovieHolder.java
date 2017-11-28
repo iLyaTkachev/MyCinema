@@ -16,7 +16,7 @@ public class MovieHolder extends RecyclerView.ViewHolder {
 
     public MovieHolder(View itemView) {
         super(itemView);
-        mTitleTextView = itemView.findViewById(R.id.text_view_1);
+        mTitleTextView = itemView.findViewById(R.id.card_movie_title_text_view);
     }
 
     public void bindMovie(IMovie pMovie){
