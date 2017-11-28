@@ -29,7 +29,6 @@ public class MoviesActivity extends AppCompatActivity {
 
         // Set up the custom toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        toolbar.setPadding(0, getStatusBarHeight(), 0, 0);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -169,12 +168,4 @@ public class MoviesActivity extends AppCompatActivity {
         }
     }
 
-    public int getStatusBarHeight() {
-        int result = 0;
-        int resourceId = getResources().getIdentifier("status_bar_height", "dimen", "android");
-        if (resourceId > 0) {
-            result = getResources().getDimensionPixelSize(resourceId);
-        }
-        return result;
-    }
 }

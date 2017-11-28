@@ -1,5 +1,6 @@
 package ilyatkachev.github.com.mycinema.movies;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -31,6 +32,9 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View 
         mMovieAdapter = new MovieAdapter(this.getActivity(),MovieListFactory.createMovieList(100));
         mMoviesRecyclerView.setAdapter(mMovieAdapter);
         mMoviesRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        //if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT)
+
         return view;
     }
 
