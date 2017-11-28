@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.movies;
+package ilyatkachev.github.com.mycinema.util;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

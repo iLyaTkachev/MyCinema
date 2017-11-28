@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.widget.Toast;
 
 import ilyatkachev.github.com.mycinema.R;
+import ilyatkachev.github.com.mycinema.util.ViewPagerAdapter;
 
 public class MoviesActivity extends AppCompatActivity {
 
@@ -90,11 +91,11 @@ public class MoviesActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
-        /*Adapter adapter = new Adapter(getSupportFragmentManager());
-        adapter.addFragment(new CheeseListFragment(), "Category 1");
-        adapter.addFragment(new CheeseListFragment(), "Category 2");
-        adapter.addFragment(new CheeseListFragment(), "Category 3");
-        viewPager.setAdapter(adapter);*/
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        adapter.addFragment(new MovieListFragment(), "Category 1");
+        adapter.addFragment(new MovieListFragment(), "Category 2");
+        adapter.addFragment(new MovieListFragment(), "Category 3");
+        viewPager.setAdapter(adapter);
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
@@ -148,9 +149,6 @@ public class MoviesActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        /*if (drawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }*/
         switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawerLayout.openDrawer(GravityCompat.START);
