@@ -16,4 +16,5 @@
     <string name="account_nav_item">Account</string>
     <string name="advanced_nav_item">Advanced</string>
     <string name="search_appbar_action">Search</string>
+    <string name="filter_appbar_action">Filter</string>
 </resources>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="all">
+        <item
+            android:id="@+id/g1"
+            android:title="genre 1"/>
+        <item
+            android:id="@+id/g2"
+            android:title="genre 2"/>
+        <item
+            android:id="@+id/g3"
+            android:title="genre 3"/>
+        <item
+            android:id="@+id/g4"
+            android:title="genre 1"/>
+        <item
+            android:id="@+id/g5"
+            android:title="genre 2"/>
+        <item
+            android:id="@+id/g6"
+            android:title="genre 3"/>
+        <item
+            android:id="@+id/g7"
+            android:title="genre 1"/>
+        <item
+            android:id="@+id/g8"
+            android:title="genre 2"/>
+        <item
+            android:id="@+id/g9"
+            android:title="genre 3"/>
+        <item
+            android:id="@+id/g10"
+            android:title="genre 1"/>
+        <item
+            android:id="@+id/g11"
+            android:title="genre 2"/>
+        <item
+            android:id="@+id/g12"
+            android:title="genre 3"/>
+        <item
+            android:id="@+id/g13"
+            android:title="genre 1"/>
+        <item
+            android:id="@+id/g14"
+            android:title="genre 2"/>
+        <item
+            android:id="@+id/g15"
+            android:title="genre 3"/>
+    </group>
+</menu>

@@ -9,6 +9,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -96,7 +97,46 @@ public class MoviesActivity extends AppCompatActivity {
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawerLayout.openDrawer(GravityCompat.START);
+                return true;
+            case R.id.filter_item:
+                showFilteringPopUpMenu();
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    public void showFilteringPopUpMenu() {
+        final PopupMenu popup = new PopupMenu(this,findViewById(R.id.filter_item));
+        popup.getMenuInflater().inflate(R.menu.movie_genres, popup.getMenu());
+
+        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.g1:
+                        Toast.makeText(getApplicationContext(), "g1", Toast.LENGTH_SHORT).show();
+                        item.setChecked(!item.isChecked());
+                        break;
+                    case R.id.g2:
+                        Toast.makeText(getApplicationContext(), "g2", Toast.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Toast.makeText(getApplicationContext(), "g3", Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        popup.show();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -154,18 +194,6 @@ public class MoviesActivity extends AppCompatActivity {
         setTitle(menuItem.getTitle());
         // Close the navigation drawer
         mDrawerLayout.closeDrawers();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                mDrawerLayout.openDrawer(GravityCompat.START);
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-
     }
 
     @Override
