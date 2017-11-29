@@ -1,5 +1,6 @@
 package ilyatkachev.github.com.mycinema.movies;
 
+import android.content.DialogInterface;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.GravityCompat;
@@ -7,9 +8,9 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -17,12 +18,19 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ilyatkachev.github.com.mycinema.R;
 import ilyatkachev.github.com.mycinema.util.ViewPagerAdapter;
 
 public class MoviesActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+
+    String[] movieGenresList;
+    boolean[] checkedGenres;
+    List<Integer> mUserGenres = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +59,9 @@ public class MoviesActivity extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        movieGenresList = getResources().getStringArray(R.array.movie_genres);
+        checkedGenres = new boolean[movieGenresList.length];
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -106,7 +117,7 @@ public class MoviesActivity extends AppCompatActivity {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
             case R.id.filter_item:
-                showFilteringPopUpMenu();
+                showFilteringAlertDialog();
                 return true;
         }
 
@@ -114,29 +125,52 @@ public class MoviesActivity extends AppCompatActivity {
 
     }
 
-    public void showFilteringPopUpMenu() {
-        final PopupMenu popup = new PopupMenu(this,findViewById(R.id.filter_item));
-        popup.getMenuInflater().inflate(R.menu.movie_genres, popup.getMenu());
+    public void showFilteringAlertDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose genres");
+        builder.setMultiChoiceItems(movieGenresList, checkedGenres, new DialogInterface.OnMultiChoiceClickListener() {
 
-        popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-            public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.g1:
-                        Toast.makeText(getApplicationContext(), "g1", Toast.LENGTH_SHORT).show();
-                        item.setChecked(!item.isChecked());
-                        break;
-                    case R.id.g2:
-                        Toast.makeText(getApplicationContext(), "g2", Toast.LENGTH_SHORT).show();
-                        break;
-                    default:
-                        Toast.makeText(getApplicationContext(), "g3", Toast.LENGTH_SHORT).show();
-                        break;
+            @Override
+            public void onClick(DialogInterface pDialogInterface, int pPosition, boolean pIsCheched) {
+                if(pIsCheched){
+                    mUserGenres.add(pPosition);
+                }else{
+                    mUserGenres.remove((Integer.valueOf(pPosition)));
                 }
-                return true;
+            }
+        });
+        builder.setCancelable(false);
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface pDialogInterface, int pI) {
+                String result = "";
+                for (int i = 0; i < mUserGenres.size(); i++) {
+                    result += movieGenresList[mUserGenres.get(i)];
+                }
+                Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
+            }
+        });
+        builder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface pDialogInterface, int pI) {
+                pDialogInterface.dismiss();
+            }
+        });
+        builder.setNeutralButton("Clear all", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface pDialogInterface, int pI) {
+                for (int i = 0; i < checkedGenres.length; i++) {
+                    checkedGenres[i] = false;
+                    mUserGenres.clear();
+                }
             }
         });
 
-        popup.show();
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void setupViewPager(ViewPager viewPager) {
