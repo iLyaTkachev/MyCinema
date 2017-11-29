@@ -15,11 +15,13 @@ import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     private List<IMovie> mMovies;
-    Context mContext;
+    private Context mContext;
+    private IMovieCardListener mMovieCardListener;
 
-    public MovieAdapter(Context pContext, List<IMovie> pMovies) {
+    public MovieAdapter(Context pContext, List<IMovie> pMovies, IMovieCardListener pMovieCardListener) {
         mMovies = pMovies;
         mContext = pContext;
+        mMovieCardListener = pMovieCardListener;
     }
 
     @Override
@@ -31,7 +33,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     @Override
     public void onBindViewHolder(MovieHolder holder, int position) {
         IMovie movie = mMovies.get(position);
-        holder.bindMovie(movie);
+        holder.bindMovie(movie, mMovieCardListener);
     }
 
     @Override

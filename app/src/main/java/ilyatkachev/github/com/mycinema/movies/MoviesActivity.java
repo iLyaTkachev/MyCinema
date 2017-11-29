@@ -45,7 +45,6 @@ public class MoviesActivity extends AppCompatActivity {
 
         // Set up the navigation drawer.
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        //mDrawerLayout.setStatusBarBackground(R.color.colorPrimaryDark);
 
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nav_view);
         if (nvDrawer != null) {
