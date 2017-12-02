@@ -1,5 +1,6 @@
 package ilyatkachev.github.com.mycinema.movies;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -22,6 +23,7 @@ import android.widget.Toast;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.R;
+import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
 import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
 import ilyatkachev.github.com.mycinema.util.NotNull;
@@ -70,6 +72,8 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View 
         @Override
         public void onCardClick(IMovie pClickedMovie) {
             Toast.makeText(getContext(), "Card clicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
+            startActivity(intent);
         }
 
         @Override

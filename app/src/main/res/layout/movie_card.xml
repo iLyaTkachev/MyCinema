@@ -21,7 +21,6 @@
             android:id="@+id/poster_image_view"
             android:layout_width="match_parent"
             android:layout_height="@dimen/card_image_height"
-
             android:scaleType="fitXY"
             android:src="@drawable/image_nav_drawer_account_background"/>
 

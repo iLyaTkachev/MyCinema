@@ -17,7 +17,7 @@
     <string name="advanced_nav_item">Advanced</string>
     <string name="search_appbar_action">Search</string>
     <string name="filter_appbar_action">Filter</string>
-    
+
     <string-array name="movie_genres">
         <item>Genre 1</item>
         <item>Genre 2</item>
