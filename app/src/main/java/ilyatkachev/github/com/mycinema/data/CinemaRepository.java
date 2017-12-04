@@ -2,6 +2,9 @@ package ilyatkachev.github.com.mycinema.data;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
+
+import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.NotNull;
 
 /**
@@ -25,7 +28,7 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     private CinemaRepository(@NonNull ICinemaDataSource tasksRemoteDataSource,
-                            @NonNull ICinemaDataSource tasksLocalDataSource) {
+                             @NonNull ICinemaDataSource tasksLocalDataSource) {
         mMoviesRemoteDataSource = NotNull.check(tasksRemoteDataSource);
         mMoviesLocalDataSource = NotNull.check(tasksLocalDataSource);
     }
@@ -34,11 +37,36 @@ public class CinemaRepository implements ICinemaDataSource {
         INSTANCE = null;
     }
 
-
-
     @Override
-    public void getMovies(@NonNull String pPath, @NonNull LoadMoviesCallback pCallback) {
-        //mMoviesRemoteDataSource.getMovies();
+    public void getMovies(@NonNull final String pPath, @NonNull final LoadMoviesCallback pCallback) {
+        mMoviesRemoteDataSource.getMovies(pPath, new LoadMoviesCallback() {
+
+            @Override
+            public void onMoviesLoaded(List<Movie> pMovies) {
+                //refreshLocalDataSource();
+                pCallback.onMoviesLoaded(pMovies);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                getMoviesFromLocalDataSource(pPath, pCallback);
+            }
+        });
+    }
+
+    private void getMoviesFromLocalDataSource(@NonNull final String pPath, @NonNull final LoadMoviesCallback pCallback) {
+        mMoviesLocalDataSource.getMovies(pPath, new LoadMoviesCallback() {
+
+            @Override
+            public void onMoviesLoaded(List<Movie> pMovies) {
+                pCallback.onMoviesLoaded(pMovies);
+            }
+
+            @Override
+            public void onDataNotAvailable() {
+                pCallback.onDataNotAvailable();
+            }
+        });
     }
 
     @Override
