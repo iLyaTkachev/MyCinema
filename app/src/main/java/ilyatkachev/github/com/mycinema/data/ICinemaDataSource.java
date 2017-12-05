@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 
 public interface ICinemaDataSource {
