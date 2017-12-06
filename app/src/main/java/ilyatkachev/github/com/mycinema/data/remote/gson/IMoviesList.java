@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.data.remote.Gson;
+package ilyatkachev.github.com.mycinema.data.remote.gson;
 
 import java.util.List;
 

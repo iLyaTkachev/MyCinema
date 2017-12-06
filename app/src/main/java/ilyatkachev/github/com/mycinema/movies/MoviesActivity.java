@@ -177,6 +177,7 @@ public class MoviesActivity extends AppCompatActivity {
         adapter.addFragment(new MovieListFragment(), getString(R.string.popular_tab));
         adapter.addFragment(new MovieListFragment(), getString(R.string.in_theaters_tab));
         adapter.addFragment(new MovieListFragment(), getString(R.string.upcoming_tab));
+        adapter.addFragment(new MovieListFragment(), getString(R.string.top_rated_tab));
         viewPager.setAdapter(adapter);
     }
 

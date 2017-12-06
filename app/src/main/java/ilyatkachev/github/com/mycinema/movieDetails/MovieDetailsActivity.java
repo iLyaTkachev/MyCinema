@@ -57,4 +57,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         final ImageView imageView = (ImageView) findViewById(R.id.movie_detail_backdrop);
         imageView.setImageResource(R.drawable.image_nav_drawer_account_background);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

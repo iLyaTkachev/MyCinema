@@ -40,7 +40,7 @@
             android:background="@color/colorPrimaryDark"
             app:tabIndicatorColor="@color/colorAccent"
             app:tabGravity="fill"
-            app:tabMode="fixed"/>
+            app:tabMode="scrollable"/>
 
     </android.support.design.widget.AppBarLayout>
 

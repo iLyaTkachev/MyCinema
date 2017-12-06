@@ -5,14 +5,12 @@ import android.util.Log;
 
 import org.json.JSONObject;
 
-import java.io.InputStream;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
-import ilyatkachev.github.com.mycinema.data.remote.Gson.MoviesListGsonParser;
+import ilyatkachev.github.com.mycinema.data.remote.gson.MoviesListGsonParser;
 import ilyatkachev.github.com.mycinema.http.HttpClient;
 import ilyatkachev.github.com.mycinema.http.IResponseListener;
-import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 
@@ -38,7 +36,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
 
     @Override
     public void getMovies(@NonNull String pPath, @NonNull final LoadMoviesCallback pCallback) {
-        for (int i=0;i<10;i++){
+        for (int i=0;i<1;i++){
             final int index = i;
         Runnable runnable = new Runnable() {
             @Override
