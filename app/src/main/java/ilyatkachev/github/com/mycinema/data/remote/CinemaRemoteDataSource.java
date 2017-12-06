@@ -8,6 +8,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
+import ilyatkachev.github.com.mycinema.data.remote.api.ApiProvider;
 import ilyatkachev.github.com.mycinema.data.remote.gson.MoviesListGsonParser;
 import ilyatkachev.github.com.mycinema.http.HttpClient;
 import ilyatkachev.github.com.mycinema.http.IResponseListener;
@@ -18,9 +19,13 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
 
     private static CinemaRemoteDataSource INSTANCE;
     private AppExecutors mAppExecutors;
+    private HttpClient mHttpClient;
+    private ApiProvider mApiProvider;
 
     private CinemaRemoteDataSource(@NonNull AppExecutors pAppExecutors) {
         mAppExecutors = pAppExecutors;
+        mHttpClient = new HttpClient();
+        mApiProvider = new ApiProvider();
     }
 
     public static CinemaRemoteDataSource getINSTANCE(@NonNull AppExecutors pAppExecutors) {
@@ -35,22 +40,20 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull String pPath, @NonNull final LoadMoviesCallback pCallback) {
-        for (int i=0;i<1;i++){
-            final int index = i;
+    public void getMovies(@NonNull final int pPage, @NonNull final LoadMoviesCallback pCallback) {
         Runnable runnable = new Runnable() {
+
             @Override
             public void run() {
-                HttpClient httpClient = new HttpClient();
-                Log.d("Tag"+"---"+index,"Make a request");
-                httpClient.request("https://api.themoviedb.org/3/movie/popular?api_key=ac40e75b91cfb918546f4311f7623a89&language=en-US&page=1", new IResponseListener() {
+                Log.d("Tag" + "---" + pPage, "Make a request");
+                mHttpClient.request(mApiProvider.getPopularMovieList(pPage), new IResponseListener() {
 
                     @Override
                     public void onResponse(String pResult) throws Exception {
-                        Log.d("Tag"+"---"+index,"On responce");
+                        Log.d("Tag" + "---" + pPage, "On responce");
                         final JSONObject jsonList = new JSONObject(pResult);
                         MoviesListGsonParser parser = new MoviesListGsonParser(jsonList.get("results").toString());
-                        final List<Movie> movieList = parser.parse();
+                        final List<Movie> movieList = parser.parse().getMovieList();
                         mAppExecutors.getMainThread().execute(new Runnable() {
 
                             @Override
@@ -75,8 +78,10 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
             }
         };
 
-        mAppExecutors.getNetworkIO().execute(runnable);}
+        mAppExecutors.getNetworkIO().execute(runnable);
     }
+
+}
 
     @Override
     public void getMovie(@NonNull final String pMovieId, @NonNull final GetMovieCallback pCallback) {

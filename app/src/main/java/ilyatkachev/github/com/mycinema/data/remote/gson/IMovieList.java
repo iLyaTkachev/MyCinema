@@ -4,8 +4,7 @@ import java.util.List;
 
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 
-public interface IMoviesListParser {
+public interface IMovieList {
 
-    //IMoviesList parse() throws Exception;
-    List<Movie> parse() throws Exception;
+    List<Movie> getMovieList();
 }
