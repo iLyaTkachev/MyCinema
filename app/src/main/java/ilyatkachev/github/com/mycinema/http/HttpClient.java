@@ -22,7 +22,7 @@ public class HttpClient implements IHttpClient {
     @Override
     public void request(@NonNull final String pUrl, final IResponseListener pListener) {
         HttpURLConnection connection = null;
-        //InputStream inputStream = null;
+        InputStream inputStream = null;
 
         try {
             if (pUrl.contains(HTTPS)) {
@@ -30,7 +30,8 @@ public class HttpClient implements IHttpClient {
             } else {
                 connection = (HttpURLConnection) getConnection(pUrl);
             }
-            InputStream inputStream = connection.getInputStream();
+            //InputStream
+                    inputStream = connection.getInputStream();
             //-----------
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             StringBuilder stringBuilder = new StringBuilder();
@@ -49,13 +50,13 @@ public class HttpClient implements IHttpClient {
             if (connection != null) {
                 connection.disconnect();
             }
-            /*if (inputStream != null) {
+            if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (final IOException ex) {
                     Log.e(TAG, "executeRequest: " + ex.getMessage(), ex);
                 }
-            }*/
+            }
         }
     }
 

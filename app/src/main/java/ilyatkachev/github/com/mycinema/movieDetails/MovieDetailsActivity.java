@@ -38,7 +38,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         loadBackdrop();
 
         AppExecutors ex = new AppExecutors();
-        CinemaRemoteDataSource.getINSTANCE(ex).getMovies("abc", new ICinemaDataSource.LoadMoviesCallback() {
+        CinemaRemoteDataSource.getINSTANCE(ex).getMovies(1, new ICinemaDataSource.LoadMoviesCallback() {
 
             @Override
             public void onMoviesLoaded(List<Movie> pMovies) {

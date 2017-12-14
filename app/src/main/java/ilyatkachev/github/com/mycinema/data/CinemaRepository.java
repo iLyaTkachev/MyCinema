@@ -38,7 +38,7 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final String pPath, @NonNull final LoadMoviesCallback pCallback) {
+    public void getMovies(@NonNull final int pPath, @NonNull final LoadMoviesCallback pCallback) {
         mMoviesRemoteDataSource.getMovies(pPath, new LoadMoviesCallback() {
 
             @Override
@@ -54,7 +54,7 @@ public class CinemaRepository implements ICinemaDataSource {
         });
     }
 
-    private void getMoviesFromLocalDataSource(@NonNull final String pPath, @NonNull final LoadMoviesCallback pCallback) {
+    private void getMoviesFromLocalDataSource(@NonNull final int pPath, @NonNull final LoadMoviesCallback pCallback) {
         mMoviesLocalDataSource.getMovies(pPath, new LoadMoviesCallback() {
 
             @Override

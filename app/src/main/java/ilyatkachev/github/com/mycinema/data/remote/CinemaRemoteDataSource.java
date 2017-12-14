@@ -81,8 +81,6 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
         mAppExecutors.getNetworkIO().execute(runnable);
     }
 
-}
-
     @Override
     public void getMovie(@NonNull final String pMovieId, @NonNull final GetMovieCallback pCallback) {
 
