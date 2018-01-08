@@ -14,6 +14,6 @@ public class MovieListGson implements IMovieList {
 
     @Override
     public List<Movie> getMovieList() {
-        return null;
+        return mMovieList;
     }
 }

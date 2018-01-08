@@ -50,7 +50,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
 
                     @Override
                     public void onResponse(String pResult) throws Exception {
-                        Log.d("Tag" + "---" + pPage, "On responce");
+                        Log.d("Tag" + "---" + pPage, "On response");
                         final JSONObject jsonList = new JSONObject(pResult);
                         MoviesListGsonParser parser = new MoviesListGsonParser(jsonList.get("results").toString());
                         final List<Movie> movieList = parser.parse().getMovieList();

@@ -30,18 +30,9 @@ public class HttpClient implements IHttpClient {
             } else {
                 connection = (HttpURLConnection) getConnection(pUrl);
             }
-            //InputStream
-                    inputStream = connection.getInputStream();
-            //-----------
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-            StringBuilder stringBuilder = new StringBuilder();
-            String line;
-
-            while ((line = reader.readLine()) != null) {
-                stringBuilder.append(line);
-            }
-            //-----------
-            pListener.onResponse(stringBuilder.toString());
+            inputStream = connection.getInputStream();
+            String result = streamToString(inputStream);
+            pListener.onResponse(result);
             connection.disconnect();
             inputStream.close();
         } catch (final Throwable t) {
@@ -71,6 +62,18 @@ public class HttpClient implements IHttpClient {
         }
 
         return connection;
+    }
+
+    @VisibleForTesting
+    private String streamToString(final InputStream pInputStream) throws Exception{
+        final BufferedReader reader = new BufferedReader(new InputStreamReader(pInputStream));
+        final StringBuilder stringBuilder = new StringBuilder();
+        String line;
+
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+        return stringBuilder.toString();
     }
 
 }
