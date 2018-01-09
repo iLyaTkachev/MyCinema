@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.util;
+package ilyatkachev.github.com.mycinema.util.usecase;
 
 public abstract class UseCase<Q extends UseCase.RequestValues, P extends UseCase.ResponseValue> {
 

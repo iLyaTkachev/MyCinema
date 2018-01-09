@@ -7,6 +7,11 @@ public class MoviesPresenter implements IMoviesContract.Presenter {
     private final IMoviesContract.View mView;
     private final GetMovies mGetMovies;
 
+    public MoviesPresenter(IMoviesContract.View pView, GetMovies pGetMovies) {
+        mView = pView;
+        mGetMovies = pGetMovies;
+    }
+
     @Override
     public void start() {
 
