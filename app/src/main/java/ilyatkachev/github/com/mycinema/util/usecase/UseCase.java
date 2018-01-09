@@ -22,11 +22,11 @@ public abstract class UseCase<Q extends UseCase.RequestValues, P extends UseCase
         mUseCaseCallback = pUseCaseCallback;
     }
 
-    void run() {
+    public void run() {
         executeUseCase(mRequestValues);
     }
 
-    protected abstract void executeUseCase(Q requestValues);
+    public abstract void executeUseCase(Q requestValues);
 
     public interface RequestValues {
 
