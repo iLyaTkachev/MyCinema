@@ -3,7 +3,7 @@ package ilyatkachev.github.com.mycinema.util.usecase;
 /**
  * Runs UseCases using a UseCaseScheduler.
  */
-public class UseCaseHandler {
+public class UseCaseHandler<Q extends UseCase.RequestValues, R extends UseCase.ResponseValue> {
 
     private static UseCaseHandler INSTANCE;
 
@@ -20,8 +20,8 @@ public class UseCaseHandler {
         mUseCaseScheduler = pUseCaseScheduler;
     }
 
-    public <T extends UseCase.RequestValues, R extends UseCase.ResponseValue> void execute(
-            final UseCase<T, R> useCase, T values, UseCase.UseCaseCallback<R> callback) {
+    public void execute(
+            final UseCase<Q, R> useCase, Q values, UseCase.UseCaseCallback<R> callback) {
         useCase.setRequestValues(values);
         useCase.setUseCaseCallback(new UseCaseCallbackWrapper(callback, this));
         mUseCaseScheduler.execute(new Runnable() {
@@ -34,29 +34,28 @@ public class UseCaseHandler {
         });
     }
 
-    private <V extends UseCase.ResponseValue> void notifyResponse(final V response,
-                                                                  final UseCase.UseCaseCallback<V> useCaseCallback) {
+    private void notifyResponse(final R response, final UseCase.UseCaseCallback<R> useCaseCallback) {
         mUseCaseScheduler.notifyResponse(response, useCaseCallback);
     }
 
-    private <V extends UseCase.ResponseValue> void notifyError(
-            final UseCase.UseCaseCallback<V> useCaseCallback) {
+    private void notifyError(final UseCase.UseCaseCallback<R> useCaseCallback) {
         mUseCaseScheduler.onError(useCaseCallback);
     }
 
-    private static final class UseCaseCallbackWrapper<V extends UseCase.ResponseValue> implements
-            UseCase.UseCaseCallback<V> {
-        private final UseCase.UseCaseCallback<V> mCallback;
+    private static final class UseCaseCallbackWrapper<R extends UseCase.ResponseValue> implements
+            UseCase.UseCaseCallback<R> {
+
+        private final UseCase.UseCaseCallback<R> mCallback;
         private final UseCaseHandler mUseCaseHandler;
 
-        public UseCaseCallbackWrapper(UseCase.UseCaseCallback<V> callback,
+        public UseCaseCallbackWrapper(UseCase.UseCaseCallback<R> callback,
                                       UseCaseHandler useCaseHandler) {
             mCallback = callback;
             mUseCaseHandler = useCaseHandler;
         }
 
         @Override
-        public void onSuccess(V response) {
+        public void onSuccess(R response) {
             mUseCaseHandler.notifyResponse(response, mCallback);
         }
 
