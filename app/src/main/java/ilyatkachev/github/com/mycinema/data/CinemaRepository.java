@@ -8,7 +8,7 @@ import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.NotNull;
 
 /**
- * Concrete implementation to load movies from the data sources into a cache.
+ * Concrete implementation to load movies from the data sources.
  */
 
 public class CinemaRepository implements ICinemaDataSource {
@@ -39,6 +39,7 @@ public class CinemaRepository implements ICinemaDataSource {
 
     @Override
     public void getMovies(@NonNull final int pPath, @NonNull final LoadMoviesCallback pCallback) {
+        //First check local data source, if there are no movies with such page then use remote data source
         mMoviesRemoteDataSource.getMovies(pPath, new LoadMoviesCallback() {
 
             @Override

@@ -3,7 +3,9 @@ package ilyatkachev.github.com.mycinema.movies.domain.model;
 
 import java.util.List;
 
-public interface IMovie {
+import ilyatkachev.github.com.mycinema.data.remote.gson.IBaseCinemaObject;
+
+public interface IMovie extends IBaseCinemaObject {
 
     int getVoteСount();
 
@@ -32,5 +34,7 @@ public interface IMovie {
     String getOverview();
 
     String getReleaseDate();
+
+    int getPage();
 
 }

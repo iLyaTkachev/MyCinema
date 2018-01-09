@@ -18,8 +18,6 @@ public interface IMoviesContract {
 
     interface Presenter extends IBasePresenter{
 
-        void result(int requestCode, int resultCode);
-
         void loadMovies(boolean forceUpdate);
     }
 }

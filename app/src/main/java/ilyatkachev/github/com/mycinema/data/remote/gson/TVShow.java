@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.data.remote.gson2;
+package ilyatkachev.github.com.mycinema.data.remote.gson;
 
 import com.google.gson.annotations.SerializedName;
 

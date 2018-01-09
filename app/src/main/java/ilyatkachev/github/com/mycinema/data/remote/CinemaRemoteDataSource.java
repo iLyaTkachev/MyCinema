@@ -3,13 +3,11 @@ package ilyatkachev.github.com.mycinema.data.remote;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import org.json.JSONObject;
-
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.remote.api.ApiProvider;
-import ilyatkachev.github.com.mycinema.data.remote.gson.MoviesListGsonParser;
+import ilyatkachev.github.com.mycinema.data.remote.gson.ResponseParser;
 import ilyatkachev.github.com.mycinema.http.HttpClient;
 import ilyatkachev.github.com.mycinema.http.IResponseListener;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
@@ -51,9 +49,8 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
                     @Override
                     public void onResponse(String pResult) throws Exception {
                         Log.d("Tag" + "---" + pPage, "On response");
-                        final JSONObject jsonList = new JSONObject(pResult);
-                        MoviesListGsonParser parser = new MoviesListGsonParser(jsonList.get("results").toString());
-                        final List<Movie> movieList = parser.parse().getMovieList();
+                        ResponseParser responseParser = new ResponseParser();
+                        final List movieList = responseParser.parse(pResult,new Movie(),"results");
                         mAppExecutors.getMainThread().execute(new Runnable() {
 
                             @Override

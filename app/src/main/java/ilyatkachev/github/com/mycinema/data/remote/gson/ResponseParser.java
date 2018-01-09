@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.data.remote.gson2;
+package ilyatkachev.github.com.mycinema.data.remote.gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -14,7 +14,7 @@ public class ResponseParser {
         mCinemaParser = new CinemaParser();
     }
 
-    public List<IBaseCinemaObject> parse(final String pJsonString, final IBaseCinemaObject pObject, final String pKey) throws Exception {
+    public List parse(final String pJsonString, final IBaseCinemaObject pObject, final String pKey) throws Exception {
         final List<IBaseCinemaObject> resultList = new ArrayList<>();
         final JSONObject jsonResponse = new JSONObject(pJsonString);
         final JSONArray jsonObjectArray = new JSONArray(jsonResponse.get(pKey).toString());

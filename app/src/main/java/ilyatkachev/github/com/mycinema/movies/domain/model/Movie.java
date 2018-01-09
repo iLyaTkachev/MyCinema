@@ -34,6 +34,11 @@ public class Movie implements IMovie {
     private String overview;
     @SerializedName("release_date")
     private String releaseDate;
+    @SerializedName("page")
+    private int page;
+
+    public Movie() {
+    }
 
     public Movie(String pTitle) {
         title = pTitle;
@@ -107,5 +112,10 @@ public class Movie implements IMovie {
     @Override
     public String getReleaseDate() {
         return releaseDate;
+    }
+
+    @Override
+    public int getPage() {
+        return page;
     }
 }
