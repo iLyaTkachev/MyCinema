@@ -38,7 +38,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final int pPage, @NonNull final LoadMoviesCallback pCallback) {
+    public void getMovies(@NonNull final int pPage, @NonNull final LoadObjectsCallback pCallback) {
         Runnable runnable = new Runnable() {
 
             @Override
@@ -55,7 +55,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
 
                             @Override
                             public void run() {
-                                pCallback.onMoviesLoaded(movieList);
+                                pCallback.onObjectsLoaded(movieList);
                             }
                         });
                     }
@@ -79,7 +79,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovie(@NonNull final String pMovieId, @NonNull final GetMovieCallback pCallback) {
+    public void getMovie(@NonNull final String pMovieId, @NonNull final GetObjectCallback pCallback) {
 
     }
 }

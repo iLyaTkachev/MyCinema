@@ -2,7 +2,7 @@ package ilyatkachev.github.com.mycinema.data.remote.gson;
 
 import com.google.gson.Gson;
 
-public class CinemaParser implements ICinemaParser {
+public class CinemaObjectParser implements ICinemaParser {
 
     @Override
     public IBaseCinemaObject parse(String pLine, IBaseCinemaObject object) throws Exception {

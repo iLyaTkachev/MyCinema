@@ -23,12 +23,14 @@ import android.widget.Toast;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.R;
+import ilyatkachev.github.com.mycinema.data.remote.gson.IBaseCinemaObject;
 import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
 import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
+import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
 import ilyatkachev.github.com.mycinema.util.NotNull;
 
-public class MovieListFragment extends Fragment implements IMoviesContract.View {
+public class MovieListFragment extends Fragment implements IMoviesContract.View<Movie> {
 
     private IMoviesContract.Presenter mPresenter;
 
@@ -63,8 +65,18 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View 
     }
 
     @Override
-    public void showMovies(List<IMovie> pMovies) {
+    public void showMovies(List<Movie> pMovies) {
 
+    }
+
+    @Override
+    public void showLoadingError() {
+
+    }
+
+    @Override
+    public boolean isActive() {
+        return false;
     }
 
     private IMovieCardListener mMovieCardListener = new IMovieCardListener() {

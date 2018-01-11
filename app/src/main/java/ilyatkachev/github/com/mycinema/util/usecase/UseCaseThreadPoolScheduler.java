@@ -33,7 +33,7 @@ public class UseCaseThreadPoolScheduler implements UseCaseScheduler {
     }
 
     @Override
-    public <V extends UseCase.ResponseValue> void notifyResponse(final V pResponse, final UseCase.UseCaseCallback<V> pUseCaseCallback) {
+    public <R extends UseCase.ResponseValue> void notifyResponse(final R pResponse, final UseCase.UseCaseCallback<R> pUseCaseCallback) {
         mHandler.post(new Runnable() {
 
             @Override
@@ -44,7 +44,7 @@ public class UseCaseThreadPoolScheduler implements UseCaseScheduler {
     }
 
     @Override
-    public <V extends UseCase.ResponseValue> void onError(final UseCase.UseCaseCallback<V> pUseCaseCallback) {
+    public <R extends UseCase.ResponseValue> void onError(final UseCase.UseCaseCallback<R> pUseCaseCallback) {
         mHandler.post(new Runnable() {
 
             @Override

@@ -20,10 +20,10 @@ public class GetMovies extends UseCase<GetMovies.RequestValues, GetMovies.Respon
 
     @Override
     public void executeUseCase(final RequestValues pRequestValues) {
-        mCinemaRepository.getMovies(pRequestValues.getPage(), new ICinemaDataSource.LoadMoviesCallback() {
+        mCinemaRepository.getMovies(pRequestValues.getPage(), new ICinemaDataSource.LoadObjectsCallback<Movie>() {
 
             @Override
-            public void onMoviesLoaded(List<Movie> pMovies) {
+            public void onObjectsLoaded(List<Movie> pMovies) {
                 getUseCaseCallback().onSuccess(new ResponseValue(pMovies));
             }
 

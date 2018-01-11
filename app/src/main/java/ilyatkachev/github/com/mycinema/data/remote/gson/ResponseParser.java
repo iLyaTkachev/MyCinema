@@ -8,10 +8,10 @@ import java.util.List;
 
 public class ResponseParser {
 
-    private CinemaParser mCinemaParser;
+    private CinemaObjectParser mCinemaObjectParser;
 
     public ResponseParser() {
-        mCinemaParser = new CinemaParser();
+        mCinemaObjectParser = new CinemaObjectParser();
     }
 
     public List parse(final String pJsonString, final IBaseCinemaObject pObject, final String pKey) throws Exception {
@@ -20,7 +20,7 @@ public class ResponseParser {
         final JSONArray jsonObjectArray = new JSONArray(jsonResponse.get(pKey).toString());
         for (int i = 0; i < jsonObjectArray.length(); i++) {
             final JSONObject jsonObject = jsonObjectArray.getJSONObject(i);
-            resultList.add(mCinemaParser.parse(jsonObject.toString(), pObject));
+            resultList.add(mCinemaObjectParser.parse(jsonObject.toString(), pObject));
         }
         return resultList;
     }

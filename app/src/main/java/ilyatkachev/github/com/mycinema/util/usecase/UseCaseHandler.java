@@ -48,14 +48,13 @@ public class UseCaseHandler<Q extends UseCase.RequestValues, R extends UseCase.R
         private final UseCase.UseCaseCallback<R> mCallback;
         private final UseCaseHandler mUseCaseHandler;
 
-        public UseCaseCallbackWrapper(UseCase.UseCaseCallback<R> callback,
-                                      UseCaseHandler useCaseHandler) {
+        public UseCaseCallbackWrapper(final UseCase.UseCaseCallback<R> callback, final UseCaseHandler useCaseHandler) {
             mCallback = callback;
             mUseCaseHandler = useCaseHandler;
         }
 
         @Override
-        public void onSuccess(R response) {
+        public void onSuccess(final R response) {
             mUseCaseHandler.notifyResponse(response, mCallback);
         }
 

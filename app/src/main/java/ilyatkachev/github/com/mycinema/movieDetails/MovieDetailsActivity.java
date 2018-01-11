@@ -38,10 +38,10 @@ public class MovieDetailsActivity extends AppCompatActivity {
         loadBackdrop();
 
         AppExecutors ex = new AppExecutors();
-        CinemaRemoteDataSource.getINSTANCE(ex).getMovies(1, new ICinemaDataSource.LoadMoviesCallback() {
+        CinemaRemoteDataSource.getINSTANCE(ex).getMovies(1, new ICinemaDataSource.LoadObjectsCallback<Movie>() {
 
             @Override
-            public void onMoviesLoaded(List<Movie> pMovies) {
+            public void onObjectsLoaded(List<Movie> pMovies) {
                 Toast.makeText(getApplicationContext(),pMovies.get(0).getTitle(),Toast.LENGTH_SHORT).show();
             }
 
