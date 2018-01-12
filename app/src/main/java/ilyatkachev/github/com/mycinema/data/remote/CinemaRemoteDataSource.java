@@ -15,7 +15,7 @@ import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 
 public class CinemaRemoteDataSource implements ICinemaDataSource {
 
-    private static CinemaRemoteDataSource INSTANCE;
+    private static volatile CinemaRemoteDataSource INSTANCE;
     private AppExecutors mAppExecutors;
     private HttpClient mHttpClient;
     private ApiProvider mApiProvider;
@@ -26,7 +26,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
         mApiProvider = new ApiProvider();
     }
 
-    public static CinemaRemoteDataSource getINSTANCE(@NonNull AppExecutors pAppExecutors) {
+    public static CinemaRemoteDataSource getInstance(@NonNull AppExecutors pAppExecutors) {
         if (INSTANCE == null) {
             synchronized (CinemaRemoteDataSource.class) {
                 if (INSTANCE == null) {

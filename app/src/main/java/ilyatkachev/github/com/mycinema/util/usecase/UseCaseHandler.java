@@ -20,15 +20,13 @@ public class UseCaseHandler<Q extends UseCase.RequestValues, R extends UseCase.R
         mUseCaseScheduler = pUseCaseScheduler;
     }
 
-    public void execute(
-            final UseCase<Q, R> useCase, Q values, UseCase.UseCaseCallback<R> callback) {
+    public void execute(final UseCase<Q, R> useCase, Q values, UseCase.UseCaseCallback<R> callback) {
         useCase.setRequestValues(values);
         useCase.setUseCaseCallback(new UseCaseCallbackWrapper(callback, this));
         mUseCaseScheduler.execute(new Runnable() {
 
             @Override
             public void run() {
-
                 useCase.run();
             }
         });

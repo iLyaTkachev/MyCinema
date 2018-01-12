@@ -3,6 +3,7 @@ package ilyatkachev.github.com.mycinema.movies;
 import android.content.DialogInterface;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
@@ -22,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.R;
+import ilyatkachev.github.com.mycinema.util.Injection;
 import ilyatkachev.github.com.mycinema.util.ViewPagerAdapter;
 
 public class MoviesActivity extends AppCompatActivity {
@@ -131,9 +133,9 @@ public class MoviesActivity extends AppCompatActivity {
 
             @Override
             public void onClick(DialogInterface pDialogInterface, int pPosition, boolean pIsCheched) {
-                if(pIsCheched){
+                if (pIsCheched) {
                     mUserGenres.add(pPosition);
-                }else{
+                } else {
                     mUserGenres.remove((Integer.valueOf(pPosition)));
                 }
             }
@@ -174,11 +176,24 @@ public class MoviesActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new MovieListFragment(), getString(R.string.popular_tab));
-        adapter.addFragment(new MovieListFragment(), getString(R.string.in_theaters_tab));
-        adapter.addFragment(new MovieListFragment(), getString(R.string.upcoming_tab));
-        adapter.addFragment(new MovieListFragment(), getString(R.string.top_rated_tab));
+        //if(getSupportFragmentManager().getFragments().isEmpty())
+
+        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.POPULAR), getString(R.string.popular_tab));
+        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.NOW_PLAYING), getString(R.string.in_theaters_tab));
+        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.UPCOMING), getString(R.string.upcoming_tab));
+        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.TOP_RATED), getString(R.string.top_rated_tab));
         viewPager.setAdapter(adapter);
+    }
+
+    private Fragment createFragmentWithPresenter(MoviesFilterType pFilterType) {
+        MovieListFragment fragment = new MovieListFragment();
+        MoviesPresenter moviesPresenter = new MoviesPresenter(
+                fragment,
+                Injection.provideGetMovies(getApplicationContext()),
+                Injection.provideUseCaseHandler(),
+                pFilterType);
+
+        return fragment;
     }
 
     public void selectDrawerItem(MenuItem menuItem) {

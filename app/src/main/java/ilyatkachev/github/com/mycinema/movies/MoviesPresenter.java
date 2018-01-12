@@ -2,6 +2,7 @@ package ilyatkachev.github.com.mycinema.movies;
 
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
@@ -9,7 +10,7 @@ import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetMovies;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCaseHandler;
 
-public class MoviesPresenter implements IMoviesContract.Presenter {
+public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
 
     private final IMoviesContract.View mView;
     private final GetMovies mGetMovies;
@@ -20,15 +21,18 @@ public class MoviesPresenter implements IMoviesContract.Presenter {
 
     private MoviesFilterType mMoviesFilterType;
     private int mCurrentPage;
+    private List<Movie> mMovieList;
 
-    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMovies pGetMovies, @NonNull final UseCaseHandler pUseCaseHandler, MoviesFilterType pMoviesFilterType) {
+    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMovies pGetMovies, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
         mView = pView;
         mGetMovies = pGetMovies;
         mUseCaseHandler = pUseCaseHandler;
         mMoviesFilterType = pMoviesFilterType;
 
-        mView.setPresenter(this);
         mCurrentPage = 1;
+        mMovieList = new ArrayList<>();
+
+        mView.setPresenter(this);
     }
 
     @Override
@@ -55,13 +59,13 @@ public class MoviesPresenter implements IMoviesContract.Presenter {
 
             @Override
             public void onSuccess(GetMovies.ResponseValue pResponse) {
-                List<Movie> movies = pResponse.getMovies();
+                mMovieList.addAll(pResponse.getMovies());
                 mCurrentPage++;
 
                 if (pShowLoadingUI) {
 
                 }
-                mView.showMovies(movies);
+                mView.showMovies(mMovieList);
             }
 
             @Override
@@ -76,5 +80,10 @@ public class MoviesPresenter implements IMoviesContract.Presenter {
 
     public MoviesFilterType getMoviesFilterType() {
         return mMoviesFilterType;
+    }
+
+    @Override
+    public List<Movie> getMovieList() {
+        return mMovieList;
     }
 }

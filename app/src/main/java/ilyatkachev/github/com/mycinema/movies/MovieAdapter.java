@@ -14,11 +14,11 @@ import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
-    private List<IMovie> mMovies;
+    private List<Movie> mMovies;
     private Context mContext;
     private IMovieCardListener mMovieCardListener;
 
-    public MovieAdapter(Context pContext, List<IMovie> pMovies, IMovieCardListener pMovieCardListener) {
+    public MovieAdapter(Context pContext, List<Movie> pMovies, IMovieCardListener pMovieCardListener) {
         mMovies = pMovies;
         mContext = pContext;
         mMovieCardListener = pMovieCardListener;

@@ -22,8 +22,10 @@ public interface IMoviesContract {
         boolean isActive();
     }
 
-    interface Presenter extends IBasePresenter {
+    interface Presenter<T extends IBaseCinemaObject> extends IBasePresenter {
 
         void loadMovies(boolean forceUpdate);
+
+        List<T> getMovieList();
     }
 }
