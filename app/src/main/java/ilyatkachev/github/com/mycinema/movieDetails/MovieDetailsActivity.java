@@ -2,6 +2,7 @@ package ilyatkachev.github.com.mycinema.movieDetails;
 
 import android.content.Intent;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,6 +23,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        getSupportFragmentManager().beginTransaction().add(new Fragment(),"FragTag").commit();
+        getSupportFragmentManager().getFragments();
         setContentView(R.layout.activity_movie_details);
 
         Intent intent = getIntent();

@@ -56,6 +56,8 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
 
         mPresenter.start();
 
+        setRetainInstance(true);
+
         return view;
     }
 

@@ -175,9 +175,8 @@ public class MoviesActivity extends AppCompatActivity {
     }
 
     private void setupViewPager(ViewPager viewPager) {
+        //during rotation adapter first check FragementManager, if there no such fragment, then it takes fragment from the list
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        //if(getSupportFragmentManager().getFragments().isEmpty())
-
         adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.POPULAR), getString(R.string.popular_tab));
         adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.NOW_PLAYING), getString(R.string.in_theaters_tab));
         adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.UPCOMING), getString(R.string.upcoming_tab));
