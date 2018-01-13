@@ -38,9 +38,9 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final int pPath, @NonNull final LoadObjectsCallback pCallback) {
+    public void getMovies(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
         //First check local data source, if there are no movies with such page then use remote data source
-        mMoviesRemoteDataSource.getMovies(pPath, new LoadObjectsCallback<Movie>() {
+        mMoviesRemoteDataSource.getMovies(pPath, pType, new LoadObjectsCallback<Movie>() {
 
             @Override
             public void onObjectsLoaded(final List<Movie> pMovies) {
@@ -50,13 +50,13 @@ public class CinemaRepository implements ICinemaDataSource {
 
             @Override
             public void onDataNotAvailable() {
-                getMoviesFromLocalDataSource(pPath, pCallback);
+                getMoviesFromLocalDataSource(pPath, pType, pCallback);
             }
         });
     }
 
-    private void getMoviesFromLocalDataSource(@NonNull final int pPath, @NonNull final LoadObjectsCallback pCallback) {
-        mMoviesLocalDataSource.getMovies(pPath, new LoadObjectsCallback<Movie>() {
+    private void getMoviesFromLocalDataSource(@NonNull final int pPath, @NonNull String pType, @NonNull final LoadObjectsCallback pCallback) {
+        mMoviesLocalDataSource.getMovies(pPath, pType, new LoadObjectsCallback<Movie>() {
 
             @Override
             public void onObjectsLoaded(List<Movie> pMovies) {

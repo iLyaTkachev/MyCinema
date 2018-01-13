@@ -34,7 +34,7 @@ public class ApiProvider {
         return getMovieList(pPage, Constants.ApiValues.NOW_PLAYING);
     }
 
-    private String getMovieList(int pPage, String pType) {
+    public String getMovieList(int pPage, String pType) {
         Uri uri = Uri.parse(Constants.ApiValues.BASE_URL).buildUpon()
                 .appendPath(Constants.ApiValues.MOVIE).appendPath(pType)
                 .appendQueryParameter(Constants.ApiValues.API_KEY, SECRET_KEY)

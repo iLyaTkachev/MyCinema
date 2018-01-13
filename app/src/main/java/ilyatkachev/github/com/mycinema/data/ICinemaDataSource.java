@@ -23,7 +23,7 @@ public interface ICinemaDataSource {
         void onDataNotAvailable();
     }
 
-    void getMovies(@NonNull int pPath, @NonNull LoadObjectsCallback pCallback);
+    void getMovies(@NonNull int pPath,@NonNull String pType, @NonNull LoadObjectsCallback pCallback);
 
     void getMovie(@NonNull String pMovieId, @NonNull GetObjectCallback pCallback);
 

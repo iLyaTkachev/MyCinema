@@ -38,19 +38,19 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final int pPage, @NonNull final LoadObjectsCallback pCallback) {
+    public void getMovies(@NonNull final int pPage, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
         Runnable runnable = new Runnable() {
 
             @Override
             public void run() {
                 Log.d("Tag" + "---" + pPage, "Make a request");
-                mHttpClient.request(mApiProvider.getPopularMovieList(pPage), new IResponseListener() {
+                mHttpClient.request(mApiProvider.getMovieList(pPage, pType), new IResponseListener() {
 
                     @Override
                     public void onResponse(String pResult) throws Exception {
                         Log.d("Tag" + "---" + pPage, "On response");
                         ResponseParser responseParser = new ResponseParser();
-                        final List movieList = responseParser.parse(pResult,new Movie(),"results");
+                        final List movieList = responseParser.parse(pResult, new Movie(), "results");
                         mAppExecutors.getMainThread().execute(new Runnable() {
 
                             @Override

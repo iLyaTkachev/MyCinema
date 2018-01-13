@@ -24,8 +24,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        getSupportFragmentManager().beginTransaction().add(new Fragment(),"FragTag").commit();
-        getSupportFragmentManager().getFragments();
         setContentView(R.layout.activity_movie_details);
 
         Intent intent = getIntent();
@@ -40,20 +38,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         collapsingToolbar.setTitle(activityTitle);
 
         loadBackdrop();
-
-        AppExecutors ex = new AppExecutors();
-        CinemaRemoteDataSource.getInstance(ex).getMovies(1, new ICinemaDataSource.LoadObjectsCallback<Movie>() {
-
-            @Override
-            public void onObjectsLoaded(List<Movie> pMovies) {
-                Toast.makeText(getApplicationContext(),pMovies.get(0).getTitle(),Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onDataNotAvailable() {
-                Toast.makeText(getApplicationContext(),"Error",Toast.LENGTH_SHORT).show();
-            }
-        });
 
     }
 
