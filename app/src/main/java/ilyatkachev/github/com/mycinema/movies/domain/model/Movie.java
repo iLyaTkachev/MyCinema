@@ -1,5 +1,10 @@
 package ilyatkachev.github.com.mycinema.movies.domain.model;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.text.ParseException;
@@ -7,16 +12,23 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Entity(tableName = "movies")
 public class Movie implements IMovie {
 
-    @SerializedName("vote_count")
-    private int voteCount;
+    @PrimaryKey
+    @ColumnInfo(name = "_id")
     @SerializedName("id")
     private int id;
+
+    @Ignore
+    @SerializedName("vote_count")
+    private int voteCount;
     @SerializedName("video")
     private boolean isVideo;
     @SerializedName("vote_average")
     private float voteAverage;
+
+    @ColumnInfo(name = "title")
     @SerializedName("title")
     private String title;
     @SerializedName("popularity")
@@ -35,6 +47,8 @@ public class Movie implements IMovie {
     private boolean isAdult;
     @SerializedName("overview")
     private String overview;
+
+    @Ignore
     @SerializedName("release_date")
     private String releaseDate;
     @SerializedName("page")

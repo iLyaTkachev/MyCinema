@@ -28,7 +28,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
 
     @Override
     public void getMovies(@NonNull int pPath, @NonNull String pType, @NonNull final LoadObjectsCallback pCallback) {
-
+        pCallback.onDataNotAvailable();
     }
 
     @Override

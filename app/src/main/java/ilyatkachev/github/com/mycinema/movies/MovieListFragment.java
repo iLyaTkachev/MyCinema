@@ -24,6 +24,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import ilyatkachev.github.com.mycinema.R;
 import ilyatkachev.github.com.mycinema.data.remote.gson.IBaseCinemaObject;
 import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
@@ -38,9 +39,10 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
 
     private RecyclerView mMoviesRecyclerView;
     private MovieAdapter mMovieAdapter;
+    private SmoothProgressBar mSmoothProgressBar;
 
     private int previousTotal = 0;
-    private int visibleThreshold = 5;
+    private final int visibleThreshold = 5;
     private boolean isLoading = false;
 
     @Nullable
@@ -48,6 +50,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.movies_frag, container, false);
 
+        mSmoothProgressBar = (SmoothProgressBar) view.findViewById(R.id.smooth_progress_bar);
         mMoviesRecyclerView = (RecyclerView) view.findViewById(R.id.loaded_movies_recycler_view);
         mMovieAdapter = new MovieAdapter(this.getContext(), mPresenter.getMovieList(), mMovieCardListener);
         mMoviesRecyclerView.setAdapter(mMovieAdapter);
@@ -90,6 +93,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
                 if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     mPresenter.loadMovies(false);
                     isLoading = true;
+                    mSmoothProgressBar.progressiveStart();
                 }
 
             }
@@ -106,11 +110,14 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     public void showMovies(List<Movie> pMovies) {
         mMovieAdapter.notifyDataSetChanged();
         isLoading = false;
+        mSmoothProgressBar.progressiveStop();
     }
 
     @Override
     public void showLoadingError() {
         Toast.makeText(getContext(), "Loading Error", Toast.LENGTH_SHORT).show();
+        mSmoothProgressBar.progressiveStop();
+        isLoading = false;
     }
 
     @Override
@@ -149,6 +156,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
                 switch (item.getItemId()) {
                     case R.id.action_like:
                         Toast.makeText(getContext(), "Like item clicked name="+pClickedMovie.getTitle(), Toast.LENGTH_SHORT).show();
+
                         break;
                     case R.id.action_add:
                         Toast.makeText(getContext(), "Add item clicked", Toast.LENGTH_SHORT).show();
