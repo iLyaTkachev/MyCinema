@@ -66,8 +66,8 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
             pRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             pRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, getContext()), true));
         } else {
-            pRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 3));
-            pRecyclerView.addItemDecoration(new GridSpacingItemDecoration(3, GridSpacingItemDecoration.dpToPx(10, getContext()), true));
+            pRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 4));
+            pRecyclerView.addItemDecoration(new GridSpacingItemDecoration(4, GridSpacingItemDecoration.dpToPx(10, getContext()), true));
         }
     }
 

@@ -2,6 +2,9 @@ package ilyatkachev.github.com.mycinema.movies.domain.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class Movie implements IMovie {
@@ -112,6 +115,19 @@ public class Movie implements IMovie {
     @Override
     public String getReleaseDate() {
         return releaseDate;
+    }
+
+    @Override
+    public String getReleaseYear() {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
+        try {
+            Date releaseDate = sdf1.parse(getReleaseDate());
+            return sdf2.format(releaseDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 
     @Override

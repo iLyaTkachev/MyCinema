@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.R;
+import ilyatkachev.github.com.mycinema.util.ImageLoaderWrapper;
 import ilyatkachev.github.com.mycinema.util.Injection;
 import ilyatkachev.github.com.mycinema.util.ViewPagerAdapter;
 
@@ -38,6 +39,7 @@ public class MoviesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
+        ImageLoaderWrapper.setConfig(getCacheDir());
 
         // Set up the custom toolbar.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

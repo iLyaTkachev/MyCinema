@@ -35,6 +35,8 @@ public interface IMovie extends IBaseCinemaObject {
 
     String getReleaseDate();
 
+    String getReleaseYear();
+
     int getPage();
 
 }
