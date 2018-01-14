@@ -114,6 +114,12 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     }
 
     @Override
+    public void setLoadingIndicator(boolean active) {
+        isLoading = active;
+
+    }
+
+    @Override
     public boolean isActive() {
         return false;
     }

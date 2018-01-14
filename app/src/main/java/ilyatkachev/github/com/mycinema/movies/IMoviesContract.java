@@ -19,6 +19,8 @@ public interface IMoviesContract {
 
         void showLoadingError();
 
+        void setLoadingIndicator(boolean active);
+
         boolean isActive();
     }
 
