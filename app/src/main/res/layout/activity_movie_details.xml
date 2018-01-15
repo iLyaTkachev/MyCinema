@@ -57,7 +57,7 @@
                     app:layout_constraintLeft_toLeftOf="parent">
 
                     <ImageView
-                        android:id="@+id/image_view_poster"
+                        android:id="@+id/movie_detail_poster_image_view"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@android:color/darker_gray"/>
@@ -121,14 +121,5 @@
     </android.support.design.widget.AppBarLayout>
 
     <include layout="@layout/content_movie_details" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@drawable/ic_favorite"
-        app:layout_anchor="@id/movie_details_appbar"
-        app:layout_anchorGravity="bottom|right|end"/>
 
 </android.support.design.widget.CoordinatorLayout>

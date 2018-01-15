@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import ilyatkachev.github.com.mycinema.R;
 import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
+import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.ImageLoaderWrapper;
 
 public class MovieHolder extends RecyclerView.ViewHolder {
@@ -25,7 +26,7 @@ public class MovieHolder extends RecyclerView.ViewHolder {
         mTitleTextView = itemView.findViewById(R.id.card_movie_title_text_view);
         mDateTextView = itemView.findViewById(R.id.card_movie_year_text_view);
         mOverflow = itemView.findViewById(R.id.overflow);
-        mPosterImageView = itemView.findViewById(R.id.poster_image_view);
+        mPosterImageView = itemView.findViewById(R.id.movie_card_poster_image_view);
         mCardView = itemView.findViewById(R.id.card_view);
     }
 
@@ -48,6 +49,6 @@ public class MovieHolder extends RecyclerView.ViewHolder {
             }
         });
 
-        ImageLoaderWrapper.loadImage("https://image.tmdb.org/t/p/w342/"+pMovie.getPosterPath(),mPosterImageView);
+        ImageLoaderWrapper.loadImage(Constants.ApiValues.IMAGE_LOADING_BASE_URL_342+pMovie.getPosterPath(),mPosterImageView);
     }
 }

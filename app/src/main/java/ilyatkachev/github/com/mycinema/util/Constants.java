@@ -17,5 +17,7 @@ public class Constants {
         public static final String LANGUAGE = "language";
         public static final String ENGLISH_LANG = "en-US";
         public static final String PAGE = "page";
+        public static final String IMAGE_LOADING_BASE_URL_342 = "https://image.tmdb.org/t/p/w342/";
+        public static final String IMAGE_LOADING_BASE_URL_1000 = "https://image.tmdb.org/t/p/w1000/";
     }
 }

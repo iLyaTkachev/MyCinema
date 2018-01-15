@@ -116,7 +116,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
 
     @Override
     public void showFavoriteMovies(List<Movie> movies) {
-        Toast.makeText(getContext(), "Favorite = "+ movies.get(0).getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Favorite = "+ movies.size(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -167,7 +167,6 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
                         break;
                     case R.id.action_add:
                         mPresenter.getFavoriteList();
-
                         break;
                 }
 
