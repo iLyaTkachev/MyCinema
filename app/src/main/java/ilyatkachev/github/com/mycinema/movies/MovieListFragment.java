@@ -30,6 +30,7 @@ import ilyatkachev.github.com.mycinema.data.remote.gson.IBaseCinemaObject;
 import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
 import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
+import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
 import ilyatkachev.github.com.mycinema.util.NotNull;
 
@@ -139,9 +140,10 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     private IMovieCardListener mMovieCardListener = new IMovieCardListener() {
 
         @Override
-        public void onCardClick(IMovie pClickedMovie) {
+        public void onCardClick(final IMovie pClickedMovie) {
             Toast.makeText(getContext(), "Card clicked", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
+            intent.putExtra(Constants.MOVIE_OBJECT,(Movie)pClickedMovie);
             startActivity(intent);
         }
 

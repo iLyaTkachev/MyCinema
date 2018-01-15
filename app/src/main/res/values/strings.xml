@@ -18,6 +18,11 @@
     <string name="advanced_nav_item">Advanced</string>
     <string name="search_appbar_action">Search</string>
     <string name="filter_appbar_action">Filter</string>
+    <string name="read_more">Read More</string>
+    <string name="release_date">Release Date</string>
+    <string name="trailers">Trailers</string>
+    <string name="cast">Cast</string>
+    <string name="similar_movies">Similar Movies</string>
 
     <string-array name="movie_genres">
         <item>Genre 1</item>

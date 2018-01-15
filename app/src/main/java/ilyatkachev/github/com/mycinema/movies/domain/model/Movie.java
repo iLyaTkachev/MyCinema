@@ -7,13 +7,14 @@ import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "movies")
-public class Movie implements IMovie {
+public class Movie implements IMovie, Serializable {
 
     @PrimaryKey
     @ColumnInfo(name = "_id")
