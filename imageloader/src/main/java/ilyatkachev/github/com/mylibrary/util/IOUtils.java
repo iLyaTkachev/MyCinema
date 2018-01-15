@@ -12,11 +12,11 @@ public final class IOUtils {
     private IOUtils() {
     }
 
-    public static void closeStream(Closeable stream) {
+    public static void closeStream(final Closeable stream) {
         if (stream != null) {
             try {
                 stream.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 Log.e(LOG_TAG, "Could not close stream");
             }
         }

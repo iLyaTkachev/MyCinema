@@ -27,11 +27,11 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
 
     private boolean mFirstLoad = true;
 
-    private MoviesFilterType mMoviesFilterType;
+    private final MoviesFilterType mMoviesFilterType;
     private int mCurrentPage;
-    private List<Movie> mMovieList;
+    private final List<Movie> mMovieList;
 
-    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMovies pGetMovies, GetFavoriteMovies pGetFavoriteMovies, AddFavoriteMovie pAddFavoriteMovie, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
+    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMovies pGetMovies, final GetFavoriteMovies pGetFavoriteMovies, final AddFavoriteMovie pAddFavoriteMovie, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
         mView = pView;
         mGetMovies = pGetMovies;
         mGetFavoriteMovies = pGetFavoriteMovies;
@@ -51,7 +51,7 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
     }
 
     @Override
-    public void loadMovies(boolean forceUpdate) {
+    public void loadMovies(final boolean forceUpdate) {
         if (forceUpdate){
             mCurrentPage = 1;
         }
@@ -68,7 +68,7 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
         mUseCaseHandler.execute(mGetMovies, requestValues, new UseCase.UseCaseCallback<GetMovies.ResponseValue>() {
 
             @Override
-            public void onSuccess(GetMovies.ResponseValue pResponse) {
+            public void onSuccess(final GetMovies.ResponseValue pResponse) {
                 mMovieList.addAll(pResponse.getMovies());
                 mCurrentPage++;
 
@@ -98,13 +98,13 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
     }
 
     @Override
-    public void addToFavorite(Movie pMovie) {
+    public void addToFavorite(final Movie pMovie) {
         final AddFavoriteMovie.RequestValues requestValues = new AddFavoriteMovie.RequestValues(pMovie);
 
         mUseCaseHandler.execute(mAddFavoriteMovie, requestValues, new UseCase.UseCaseCallback<AddFavoriteMovie.ResponseValue>() {
 
             @Override
-            public void onSuccess(AddFavoriteMovie.ResponseValue pResponse) {
+            public void onSuccess(final AddFavoriteMovie.ResponseValue pResponse) {
                 Log.d(TAG,"Favorite movie added to db");
             }
 
@@ -121,7 +121,7 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
         mUseCaseHandler.execute(mGetFavoriteMovies, new GetFavoriteMovies.RequestValues(), new UseCase.UseCaseCallback<GetFavoriteMovies.ResponseValue>() {
 
             @Override
-            public void onSuccess(GetFavoriteMovies.ResponseValue pResponse) {
+            public void onSuccess(final GetFavoriteMovies.ResponseValue pResponse) {
                 mView.showFavoriteMovies(pResponse.getMovies());
             }
 

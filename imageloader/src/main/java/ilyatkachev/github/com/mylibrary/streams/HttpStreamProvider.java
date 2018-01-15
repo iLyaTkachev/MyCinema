@@ -12,8 +12,8 @@ public class HttpStreamProvider implements StreamProvider<String> {
     private static final int CONNECT_TIMEOUT = 10 * 1000;
 
     @Override
-    public InputStream get(String path) throws IOException {
-        HttpURLConnection connection = (HttpURLConnection) (new URL(path)).openConnection();
+    public InputStream get(final String path) throws IOException {
+        final HttpURLConnection connection = (HttpURLConnection) (new URL(path)).openConnection();
         connection.setConnectTimeout(CONNECT_TIMEOUT);
         connection.setReadTimeout(READ_TIMEOUT);
         return connection.getInputStream();

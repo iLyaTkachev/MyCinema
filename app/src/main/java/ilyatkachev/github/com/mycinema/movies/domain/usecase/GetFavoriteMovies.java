@@ -23,7 +23,7 @@ public class GetFavoriteMovies extends UseCase<GetFavoriteMovies.RequestValues, 
         mCinemaRepository.getFavoriteMovies(new ICinemaDataSource.LoadObjectsCallback<Movie>() {
 
             @Override
-            public void onObjectsLoaded(List<Movie> pMovies) {
+            public void onObjectsLoaded(final List<Movie> pMovies) {
                 getUseCaseCallback().onSuccess(new GetFavoriteMovies.ResponseValue(pMovies));
             }
 

@@ -68,7 +68,7 @@ public class ImageLib {
         return INSTANCE;
     }
 
-    public void setConfig(ImageLib.Config config) {
+    public void setConfig(final ImageLib.Config config) {
         this.config = config;
         if (config.hasDiskCache()) {
             diskCache = new BaseDiskCache(config.cacheDir);
@@ -79,7 +79,7 @@ public class ImageLib {
 
         File cacheDir;
 
-        public Config(File cacheDir) {
+        public Config(final File cacheDir) {
             this.cacheDir = cacheDir;
         }
 
@@ -88,7 +88,7 @@ public class ImageLib {
         }
     }
 
-    public ImageRequest.Builder load(String url) {
+    public ImageRequest.Builder load(final String url) {
         return new ImageRequest.Builder(this).load(url);
     }
 
@@ -100,14 +100,14 @@ public class ImageLib {
         new ImageLib.ImageResultAsyncTask().executeOnExecutor(executorService);
     }
 
-    private void processImageResult(ImageResponse pImageResponse) {
+    private void processImageResult(final ImageResponse pImageResponse) {
         if (pImageResponse != null) {
-            ImageRequest request = pImageResponse.getRequest();
-            ImageView imageView = request.target.get();
+            final ImageRequest request = pImageResponse.getRequest();
+            final ImageView imageView = request.target.get();
             if (imageView != null) {
-                Object tag = imageView.getTag();
+                final Object tag = imageView.getTag();
                 if (tag != null && tag.equals(request.url)) {
-                    TransitionDrawable drawable = new TransitionDrawable(new Drawable[]{EMPTY_DRAWABLE, new BitmapDrawable(pImageResponse.getBitmap())});
+                    final TransitionDrawable drawable = new TransitionDrawable(new Drawable[]{EMPTY_DRAWABLE, new BitmapDrawable(pImageResponse.getBitmap())});
                     imageView.setImageDrawable(drawable);
                     drawable.startTransition(500);
                 }
@@ -115,8 +115,8 @@ public class ImageLib {
         }
     }
 
-    void enqueue(ImageRequest request) {
-        ImageView imageView = request.target.get();
+    void enqueue(final ImageRequest request) {
+        final ImageView imageView = request.target.get();
 
         if (imageView == null) {
             return;
@@ -144,7 +144,7 @@ public class ImageLib {
             @Override
             public boolean onPreDraw() {
                 imageView.getViewTreeObserver().removeOnPreDrawListener(this);
-                ImageView view = request.target.get();
+                final ImageView view = request.target.get();
                 if (view == null) {
                     return true;
                 }
@@ -159,12 +159,12 @@ public class ImageLib {
         });
     }
 
-    private boolean imageHasSize(ImageRequest request) {
+    private boolean imageHasSize(final ImageRequest request) {
         if (request.width > 0 && request.height > 0) {
             return true;
         }
 
-        ImageView imageView = request.target.get();
+        final ImageView imageView = request.target.get();
         if (imageView != null && imageView.getWidth() > 0 && imageView.getHeight() > 0) {
             request.width = imageView.getWidth();
             request.height = imageView.getHeight();
@@ -174,18 +174,18 @@ public class ImageLib {
         return false;
     }
 
-    private Bitmap getScaledBitmap(InputStream inputStream, int w, int h) throws IOException {
+    private Bitmap getScaledBitmap(final InputStream inputStream, final int w, final int h) throws IOException {
 
         try {
             final BitmapFactory.Options options = new BitmapFactory.Options();
 
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(inputStream.available());
-            byte[] chunk = new byte[1 << 16];
+            final ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream(inputStream.available());
+            final byte[] chunk = new byte[1 << 16];
             int bytesRead;
             while ((bytesRead = inputStream.read(chunk)) > 0) {
                 byteArrayOutputStream.write(chunk, 0, bytesRead);
             }
-            byte[] bytes = byteArrayOutputStream.toByteArray();
+            final byte[] bytes = byteArrayOutputStream.toByteArray();
 
             options.inJustDecodeBounds = true;
             BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
@@ -193,14 +193,14 @@ public class ImageLib {
             options.inSampleSize = calculateSampleSize(options, w, h);
             options.inJustDecodeBounds = false;
 
-            Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
+            final Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length, options);
             return bitmap;
         } finally {
             IOUtils.closeStream(inputStream);
         }
     }
 
-    private static int calculateSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private static int calculateSampleSize(final BitmapFactory.Options options, final int reqWidth, final int reqHeight) {
         final int height = options.outHeight;
         final int width = options.outWidth;
         int inSampleSize = 1;
@@ -225,13 +225,13 @@ public class ImageLib {
     private class ImageResultAsyncTask extends AsyncTask<Void, Void, ImageResponse> {
 
         @Override
-        protected ImageResponse doInBackground(Void... voids) {
+        protected ImageResponse doInBackground(final Void... voids) {
 
             ImageResponse result = null;
 
             try {
 
-                ImageRequest request = queue.takeFirst();
+                final ImageRequest request = queue.takeFirst();
                 Log.d(TAG, "doInBackground: " + request.url);
 
                 result = new ImageResponse(request);
@@ -248,20 +248,20 @@ public class ImageLib {
                 Bitmap bitmap;
                 if (config.hasDiskCache()) {
                     try {
-                        File file = diskCache.get(request.url);
-                        InputStream fileStream = new FileStreamProvider().get(file);
+                        final File file = diskCache.get(request.url);
+                        final InputStream fileStream = new FileStreamProvider().get(file);
                         bitmap = getScaledBitmap(fileStream, request.width, request.height);
                         if (bitmap != null) {
                             Log.d(TAG, "doInBackground: from disk cache " + request.url);
                             result.setBitmap(bitmap);
                             return result;
                         }
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         Log.e(TAG, "doInBackground: can't get file for " + request.url, e);
                     }
                 }
 
-                InputStream inputStream = new HttpStreamProvider().get(request.url);
+                final InputStream inputStream = new HttpStreamProvider().get(request.url);
 
                 bitmap = getScaledBitmap(inputStream, request.height, request.width);
 
@@ -274,7 +274,7 @@ public class ImageLib {
                 }
 
                 return result;
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 Log.e(TAG, "doInBackground: ", e);
                 if (result != null) {
                     result.setException(e);
@@ -284,13 +284,13 @@ public class ImageLib {
         }
 
         @Override
-        protected void onPostExecute(ImageResponse pImageResponse) {
+        protected void onPostExecute(final ImageResponse pImageResponse) {
             processImageResult(pImageResponse);
         }
 
     }
 
-    private void cacheBitmap(ImageRequest request, Bitmap bitmap) {
+    private void cacheBitmap(final ImageRequest request, final Bitmap bitmap) {
         synchronized (lock) {
             lruCache.put(request.url, bitmap);
         }
@@ -299,7 +299,7 @@ public class ImageLib {
             if (config.hasDiskCache()) {
                 diskCache.save(request.url, bitmap);
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             Log.e(TAG, "doInBackground: ", e);
         }
     }

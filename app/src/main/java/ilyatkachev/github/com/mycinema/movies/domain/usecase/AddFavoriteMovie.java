@@ -22,7 +22,7 @@ public class AddFavoriteMovie extends UseCase<AddFavoriteMovie.RequestValues, Ad
 
         private final Movie mMovie;
 
-        public RequestValues(Movie pMovie) {
+        public RequestValues(final Movie pMovie) {
             mMovie = pMovie;
         }
 

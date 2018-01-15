@@ -22,7 +22,7 @@ public class AppExecutors {
     }
 
     @VisibleForTesting
-    private AppExecutors(Executor pNetworkIO, Executor pDiskIO, Executor pMainThread) {
+    private AppExecutors(final Executor pNetworkIO, final Executor pDiskIO, final Executor pMainThread) {
         mNetworkIO = pNetworkIO;
         mDiskIO = pDiskIO;
         mMainThread = pMainThread;

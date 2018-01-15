@@ -44,25 +44,25 @@ public class MovieDetailsActivity extends AppCompatActivity {
     //private BriefsSmallAdapter mSimilarMoviesAdapter;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_movie_details);
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         mMovie = (IMovie) intent.getSerializableExtra(Constants.MOVIE_OBJECT);
 
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.movie_detail_toolbar);
+        final Toolbar toolbar = findViewById(R.id.movie_detail_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mCollapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.movie_details_collapsing_toolbar);
+        mCollapsingToolbarLayout = findViewById(R.id.movie_details_collapsing_toolbar);
         mCollapsingToolbarLayout.setTitle("");
 
-        mAppBarLayout = (AppBarLayout) findViewById(R.id.movie_details_appbar);
+        mAppBarLayout = findViewById(R.id.movie_details_appbar);
         mAppBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+            public void onOffsetChanged(final AppBarLayout appBarLayout, final int verticalOffset) {
                 if (appBarLayout.getTotalScrollRange() + verticalOffset == 0) {
                     mCollapsingToolbarLayout.setTitle(mMovie.getTitle());
                 } else {
@@ -74,22 +74,22 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mPosterImageView = findViewById(R.id.movie_detail_poster_image_view);
         mBackdropImageView = findViewById(R.id.movie_detail_backdrop_image_view);
 
-        int mPosterWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.25);
-        int mPosterHeight = (int) (mPosterWidth / 0.66);
-        int mBackdropWidth = getResources().getDisplayMetrics().widthPixels;
-        int mBackdropHeight = (int) (mBackdropWidth / 1.77);
+        final int mPosterWidth = (int) (getResources().getDisplayMetrics().widthPixels * 0.25);
+        final int mPosterHeight = (int) (mPosterWidth / 0.66);
+        final int mBackdropWidth = getResources().getDisplayMetrics().widthPixels;
+        final int mBackdropHeight = (int) (mBackdropWidth / 1.77);
 
         mPosterImageView.getLayoutParams().width = mPosterWidth;
         mPosterImageView.getLayoutParams().height = mPosterHeight;
 
         mBackdropImageView.getLayoutParams().height = mBackdropHeight;
 
-        mTitleTextView = (TextView) findViewById(R.id.text_view_title_movie_detail);
-        mYearTextView = (TextView) findViewById(R.id.text_view_year_movie_detail);
-        mRatingTextView = (TextView) findViewById(R.id.text_view_rating_movie_detail);
-        mOverviewTextView = (TextView) findViewById(R.id.text_view_overview_movie_detail);
-        mOverviewReadMoreTextView = (TextView) findViewById(R.id.text_view_read_more_movie_detail);
-        mDetailsTextView = (TextView) findViewById(R.id.text_view_release_date);
+        mTitleTextView = findViewById(R.id.text_view_title_movie_detail);
+        mYearTextView = findViewById(R.id.text_view_year_movie_detail);
+        mRatingTextView = findViewById(R.id.text_view_rating_movie_detail);
+        mOverviewTextView = findViewById(R.id.text_view_overview_movie_detail);
+        mOverviewReadMoreTextView = findViewById(R.id.text_view_read_more_movie_detail);
+        mDetailsTextView = findViewById(R.id.text_view_release_date);
 
         loadActivity();
 

@@ -13,16 +13,16 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
     private int mSpacing;
     private boolean mIncludeEdge;
 
-    public GridSpacingItemDecoration(int pSpanCount, int pSpacing, boolean pIncludeEdge) {
+    public GridSpacingItemDecoration(final int pSpanCount, final int pSpacing, final boolean pIncludeEdge) {
         this.mSpanCount = pSpanCount;
         this.mSpacing = pSpacing;
         this.mIncludeEdge = pIncludeEdge;
     }
 
     @Override
-    public void getItemOffsets(Rect pOutRect, View pView, RecyclerView pParent, RecyclerView.State pState) {
-        int position = pParent.getChildAdapterPosition(pView); // item position
-        int column = position % mSpanCount; // item column
+    public void getItemOffsets(final Rect pOutRect, final View pView, final RecyclerView pParent, final RecyclerView.State pState) {
+        final int position = pParent.getChildAdapterPosition(pView); // item position
+        final int column = position % mSpanCount; // item column
 
         if (mIncludeEdge) {
             pOutRect.left = mSpacing - column * mSpacing / mSpanCount;
@@ -44,8 +44,8 @@ public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
     /**
      * Converting dp to pixel
      */
-    public static int dpToPx(int pDp, Context pContext) {
-        Resources r = pContext.getResources();
+    public static int dpToPx(final int pDp, final Context pContext) {
+        final Resources r = pContext.getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, pDp, r.getDisplayMetrics()));
     }
 }

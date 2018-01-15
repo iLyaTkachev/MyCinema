@@ -15,7 +15,6 @@ public class NetworkIOThreadExecutor implements Executor {
     private final Executor mNetworkIO;
 
     public NetworkIOThreadExecutor(int mThreadCount) {
-        //mNetworkIO = Executors.newFixedThreadPool(mThreadCount);
         mNetworkIO = new ThreadPoolExecutor(mThreadCount,mThreadCount,60L, TimeUnit.SECONDS,new LinkedBlockingQueue<Runnable>());
     }
 

@@ -18,21 +18,21 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
     private Context mContext;
     private IMovieCardListener mMovieCardListener;
 
-    public MovieAdapter(Context pContext, List<Movie> pMovies, IMovieCardListener pMovieCardListener) {
+    public MovieAdapter(final Context pContext, final List<Movie> pMovies, final IMovieCardListener pMovieCardListener) {
         mMovies = pMovies;
         mContext = pContext;
         mMovieCardListener = pMovieCardListener;
     }
 
     @Override
-    public MovieHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(mContext).inflate(R.layout.movie_card, parent, false);
+    public MovieHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+        final View view = LayoutInflater.from(mContext).inflate(R.layout.movie_card, parent, false);
         return new MovieHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(MovieHolder holder, int position) {
-        IMovie movie = mMovies.get(position);
+    public void onBindViewHolder(final MovieHolder holder, final int position) {
+        final IMovie movie = mMovies.get(position);
         holder.bindMovie(movie, mMovieCardListener);
     }
 

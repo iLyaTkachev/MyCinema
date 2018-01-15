@@ -15,11 +15,11 @@ public class MovieHolder extends RecyclerView.ViewHolder {
 
     private IMovie mMovie;
 
-    private TextView mTitleTextView;
-    private TextView mDateTextView;
-    private ImageView mOverflow;
-    private ImageView mPosterImageView;
-    private CardView mCardView;
+    private final TextView mTitleTextView;
+    private final TextView mDateTextView;
+    private final ImageView mOverflow;
+    private final ImageView mPosterImageView;
+    private final CardView mCardView;
 
     public MovieHolder(View itemView) {
         super(itemView);

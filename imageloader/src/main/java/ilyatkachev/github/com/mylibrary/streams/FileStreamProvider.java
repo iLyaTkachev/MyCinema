@@ -12,8 +12,8 @@ public class FileStreamProvider implements StreamProvider<File> {
     private static final int BUFFER_SIZE = 4096;
 
     @Override
-    public InputStream get(File file) throws IOException {
-        BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file), BUFFER_SIZE);
+    public InputStream get(final File file) throws IOException {
+        final BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(file), BUFFER_SIZE);
         return inputStream;
     }
 }

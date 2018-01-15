@@ -23,7 +23,7 @@ public class GetMovies extends UseCase<GetMovies.RequestValues, GetMovies.Respon
         mCinemaRepository.getMovies(pRequestValues.getPage(), pRequestValues.getMoviesFilterType().toApiString(), new ICinemaDataSource.LoadObjectsCallback<Movie>() {
 
             @Override
-            public void onObjectsLoaded(List<Movie> pMovies) {
+            public void onObjectsLoaded(final List<Movie> pMovies) {
                 getUseCaseCallback().onSuccess(new ResponseValue(pMovies));
             }
 
@@ -39,7 +39,7 @@ public class GetMovies extends UseCase<GetMovies.RequestValues, GetMovies.Respon
         private final int mPage;
         private final MoviesFilterType mMoviesFilterType;
 
-        public RequestValues(int pPage, @NonNull final MoviesFilterType pMoviesFilterType) {
+        public RequestValues(final int pPage, @NonNull final MoviesFilterType pMoviesFilterType) {
             mPage = pPage;
             mMoviesFilterType = pMoviesFilterType;
         }

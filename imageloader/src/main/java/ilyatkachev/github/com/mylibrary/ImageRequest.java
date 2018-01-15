@@ -11,7 +11,7 @@ class ImageRequest {
     int width;
     int height;
 
-    private ImageRequest(Builder builder) {
+    private ImageRequest(final Builder builder) {
         url = builder.url;
         target = builder.target;
     }
@@ -21,16 +21,16 @@ class ImageRequest {
         private String url;
         private WeakReference<ImageView> target;
 
-        Builder(ImageLib pImageLib) {
+        Builder(final ImageLib pImageLib) {
             this.mImageLib = pImageLib;
         }
 
-        Builder load(String val) {
+        Builder load(final String val) {
             url = val;
             return this;
         }
 
-        public void into(ImageView val) {
+        public void into(final ImageView val) {
             target = new WeakReference<>(val);
             mImageLib.enqueue(this.build());
         }

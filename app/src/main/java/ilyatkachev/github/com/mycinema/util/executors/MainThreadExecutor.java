@@ -8,10 +8,10 @@ import java.util.concurrent.Executor;
 
 public class MainThreadExecutor implements Executor {
 
-    private Handler mainThreadHandler = new Handler(Looper.getMainLooper());
+    private final Handler mainThreadHandler = new Handler(Looper.getMainLooper());
 
     @Override
-    public void execute(@NonNull Runnable pRunnable) {
+    public void execute(@NonNull final Runnable pRunnable) {
         mainThreadHandler.post(pRunnable);
     }
 }

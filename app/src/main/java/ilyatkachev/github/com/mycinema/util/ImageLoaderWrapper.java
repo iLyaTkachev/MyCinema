@@ -6,7 +6,7 @@ import java.io.File;
 
 import ilyatkachev.github.com.mylibrary.ImageLib;
 
-public class ImageLoaderWrapper {
+public final class ImageLoaderWrapper {
 
     public static void loadImage(final String pPath, final ImageView pImageView) {
         ImageLib.getInstance().load(pPath).into(pImageView);

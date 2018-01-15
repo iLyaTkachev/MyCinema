@@ -1,11 +1,10 @@
 package ilyatkachev.github.com.mycinema.util;
 
-public class Constants {
+public final class Constants {
 
-    public static final String ACTIVITY_TITLE = "activity_title";
     public static final String MOVIE_OBJECT = "movie";
 
-    public class ApiValues{
+    public final class ApiValues{
 
         public static final String BASE_URL = "https://api.themoviedb.org/3/";
         public static final String API_KEY = "api_key";

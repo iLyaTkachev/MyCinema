@@ -13,16 +13,16 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
 
     private static volatile CinemaLocalDataSource INSTANCE;
 
-    private MoviesDao mMoviesDao;
+    private final MoviesDao mMoviesDao;
 
-    private AppExecutors mAppExecutors;
+    private final AppExecutors mAppExecutors;
 
-    private CinemaLocalDataSource(@NonNull AppExecutors pAppExecutors, @NonNull MoviesDao pMoviesDao) {
+    private CinemaLocalDataSource(@NonNull final AppExecutors pAppExecutors, @NonNull final MoviesDao pMoviesDao) {
         mAppExecutors = pAppExecutors;
         mMoviesDao = pMoviesDao;
     }
 
-    public static CinemaLocalDataSource getInstance(@NonNull AppExecutors pAppExecutors, @NonNull MoviesDao pMoviesDao) {
+    public static CinemaLocalDataSource getInstance(@NonNull final AppExecutors pAppExecutors, @NonNull final MoviesDao pMoviesDao) {
         if (INSTANCE == null) {
             synchronized (CinemaLocalDataSource.class) {
                 if (INSTANCE == null) {
@@ -34,7 +34,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull int pPath, @NonNull String pType, @NonNull final LoadObjectsCallback pCallback) {
+    public void getMovies(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
         pCallback.onDataNotAvailable();
     }
 
@@ -45,7 +45,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
 
     @Override
     public void getFavoriteMovies(@NonNull final LoadObjectsCallback pCallback) {
-        Runnable runnable = new Runnable() {
+        final Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 final List<Movie> movies = mMoviesDao.getMovies();
@@ -68,7 +68,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
 
     @Override
     public void addFavoriteMovie(@NonNull final Movie pMovie) {
-        Runnable runnable = new Runnable() {
+        final Runnable runnable = new Runnable() {
             @Override
             public void run() {
                 mMoviesDao.insertMovie(pMovie);

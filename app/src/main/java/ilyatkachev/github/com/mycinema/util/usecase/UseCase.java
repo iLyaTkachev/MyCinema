@@ -10,7 +10,7 @@ public abstract class UseCase<Q extends UseCase.RequestValues, P extends UseCase
         return mRequestValues;
     }
 
-    public void setRequestValues(Q pRequestValues) {
+    public void setRequestValues(final Q pRequestValues) {
         mRequestValues = pRequestValues;
     }
 
@@ -18,7 +18,7 @@ public abstract class UseCase<Q extends UseCase.RequestValues, P extends UseCase
         return mUseCaseCallback;
     }
 
-    public void setUseCaseCallback(UseCaseCallback<P> pUseCaseCallback) {
+    public void setUseCaseCallback(final UseCaseCallback<P> pUseCaseCallback) {
         mUseCaseCallback = pUseCaseCallback;
     }
 

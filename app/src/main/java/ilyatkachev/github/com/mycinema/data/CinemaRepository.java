@@ -27,8 +27,8 @@ public class CinemaRepository implements ICinemaDataSource {
         return INSTANCE;
     }
 
-    private CinemaRepository(@NonNull ICinemaDataSource tasksRemoteDataSource,
-                             @NonNull ICinemaDataSource tasksLocalDataSource) {
+    private CinemaRepository(@NonNull final ICinemaDataSource tasksRemoteDataSource,
+                             @NonNull final ICinemaDataSource tasksLocalDataSource) {
         mMoviesRemoteDataSource = NotNull.check(tasksRemoteDataSource);
         mMoviesLocalDataSource = NotNull.check(tasksLocalDataSource);
     }
@@ -38,16 +38,16 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
+    public void getMovies(final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
         //First check local data source, if there are no movies with such page then use remote data source
         getMoviesFromLocalDataSource(pPath,pType,pCallback);
     }
 
-    private void getMoviesFromLocalDataSource(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
+    private void getMoviesFromLocalDataSource(final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
         mMoviesLocalDataSource.getMovies(pPath, pType, new LoadObjectsCallback<Movie>() {
 
             @Override
-            public void onObjectsLoaded(List<Movie> pMovies) {
+            public void onObjectsLoaded(final List<Movie> pMovies) {
                 pCallback.onObjectsLoaded(pMovies);
             }
 
@@ -58,7 +58,7 @@ public class CinemaRepository implements ICinemaDataSource {
         });
     }
 
-    private void getMoviesFromRemoteDataSource(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
+    private void getMoviesFromRemoteDataSource(final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
         mMoviesRemoteDataSource.getMovies(pPath, pType, new LoadObjectsCallback<Movie>() {
 
             @Override
@@ -75,17 +75,17 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovie(@NonNull String pMovieId, @NonNull GetObjectCallback pCallback) {
+    public void getMovie(@NonNull final String pMovieId, @NonNull final GetObjectCallback pCallback) {
 
     }
 
     @Override
-    public void getFavoriteMovies(@NonNull LoadObjectsCallback pCallback) {
+    public void getFavoriteMovies(@NonNull final LoadObjectsCallback pCallback) {
         mMoviesLocalDataSource.getFavoriteMovies(pCallback);
     }
 
     @Override
-    public void addFavoriteMovie(@NonNull Movie pMovie) {
+    public void addFavoriteMovie(@NonNull final Movie pMovie) {
         mMoviesLocalDataSource.addFavoriteMovie(pMovie);
     }
 }

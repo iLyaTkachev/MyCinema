@@ -32,7 +32,7 @@ public class BaseDiskCache implements DiskCache {
         //this.cacheDir = cacheDir;
         cacheDir = new File(pCacheDir.getPath(), IMAGE_CACHE_DIR_NAME);
         if (!cacheDir.exists()) {
-            boolean mkdir = cacheDir.mkdirs();
+            final boolean mkdir = cacheDir.mkdirs();
             if (!mkdir) {
                 throw new IllegalStateException("Can't create dir for images");
             }
@@ -52,19 +52,19 @@ public class BaseDiskCache implements DiskCache {
     @Override
     public File get(final String imageUri) throws IOException {
         final String fileName = MD5.hash(imageUri);
-        File[] files = cacheDir.listFiles(new FilenameFilter() {
+        final File[] files = cacheDir.listFiles(new FilenameFilter() {
 
             @Override
-            public boolean accept(File dir, String name) {
+            public boolean accept(final File dir, final String name) {
                 return fileName.equals(name);
             }
         });
         if (files != null && files.length == 1) {
             return files[0];
         } else {
-            File file = new File(cacheDir, fileName);
+            final File file = new File(cacheDir, fileName);
             if (!file.exists()) {
-                boolean fileCreated = file.createNewFile();
+                final boolean fileCreated = file.createNewFile();
                 Log.d("DiskCache", "get: file created :" + fileCreated);
             }
             return file;
@@ -73,11 +73,11 @@ public class BaseDiskCache implements DiskCache {
 
     @Override
     public void save(final String imageUri, final Bitmap bitmap) throws IOException {
-        File imageFile = get(imageUri);
-        FileOutputStream out = new FileOutputStream(imageFile);
-        OutputStream os = new BufferedOutputStream(out, BUFFER_SIZE);
+        final File imageFile = get(imageUri);
+        final FileOutputStream out = new FileOutputStream(imageFile);
+        final OutputStream os = new BufferedOutputStream(out, BUFFER_SIZE);
         try {
-            boolean savedSuccessfully = bitmap.compress(DEFAULT_COMPRESS_FORMAT, DEFAULT_COMPRESS_QUALITY, os);
+            final boolean savedSuccessfully = bitmap.compress(DEFAULT_COMPRESS_FORMAT, DEFAULT_COMPRESS_QUALITY, os);
             imageFile.setLastModified(System.currentTimeMillis());
         } finally {
             IOUtils.closeStream(os);
@@ -88,11 +88,11 @@ public class BaseDiskCache implements DiskCache {
         Log.d(TAG, "freeSpaceIfRequired() called");
         long currentCacheSize = getCurrentCacheSize();
         if (currentCacheSize > cacheSize) {
-            File[] files = cacheDir.listFiles();
+            final File[] files = cacheDir.listFiles();
             Arrays.sort(files, new Comparator<File>() {
 
                 @Override
-                public int compare(File lhs, File rhs) {
+                public int compare(final File lhs, final File rhs) {
                     return Long.valueOf(lhs.lastModified()).compareTo(rhs.lastModified());
                 }
             });
@@ -112,8 +112,8 @@ public class BaseDiskCache implements DiskCache {
 
     private long getCurrentCacheSize() {
         long currentSize = cacheDir.length();
-        File[] files = this.cacheDir.listFiles();
-        for (File f : files) {
+        final File[] files = this.cacheDir.listFiles();
+        for (final File f : files) {
             currentSize += f.length();
         }
         return currentSize;
@@ -126,7 +126,7 @@ public class BaseDiskCache implements DiskCache {
             final StatFs statFs = new StatFs(dir.getAbsolutePath());
             final long available = ((long) statFs.getBlockCount()) * statFs.getBlockSize();
             size = available / 50;
-        } catch (IllegalArgumentException ignored) {
+        } catch (final IllegalArgumentException ignored) {
         }
 
         return Math.max(Math.min(size, MAX_DISK_CACHE_SIZE), MIN_DISK_CACHE_SIZE);

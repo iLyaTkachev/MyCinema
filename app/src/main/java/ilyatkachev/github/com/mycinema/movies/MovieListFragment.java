@@ -2,37 +2,28 @@ package ilyatkachev.github.com.mycinema.movies;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import ilyatkachev.github.com.mycinema.R;
-import ilyatkachev.github.com.mycinema.data.remote.gson.IBaseCinemaObject;
 import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
 import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
-import ilyatkachev.github.com.mycinema.util.NotNull;
 
 public class MovieListFragment extends Fragment implements IMoviesContract.View<Movie> {
 
@@ -48,8 +39,8 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.movies_frag, container, false);
+    public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.movies_frag, container, false);
 
         mSmoothProgressBar = (SmoothProgressBar) view.findViewById(R.id.smooth_progress_bar);
         mMoviesRecyclerView = (RecyclerView) view.findViewById(R.id.loaded_movies_recycler_view);
@@ -65,7 +56,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         return view;
     }
 
-    private void setupLayoutManager(@NonNull RecyclerView pRecyclerView) {
+    private void setupLayoutManager(@NonNull final RecyclerView pRecyclerView) {
         if (getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             pRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
             pRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, GridSpacingItemDecoration.dpToPx(10, getContext()), true));
@@ -78,12 +69,12 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     private void setupScrollListener(@NonNull final RecyclerView pRecyclerView){
         mMoviesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
 
-                GridLayoutManager gridLayoutManager = (GridLayoutManager)pRecyclerView.getLayoutManager();
-                int visibleItemCount = gridLayoutManager.getChildCount();
-                int totalItemCount = gridLayoutManager.getItemCount();
-                int firstVisibleItem = gridLayoutManager.findFirstVisibleItemPosition();
+                final GridLayoutManager gridLayoutManager = (GridLayoutManager)pRecyclerView.getLayoutManager();
+                final int visibleItemCount = gridLayoutManager.getChildCount();
+                final int totalItemCount = gridLayoutManager.getItemCount();
+                final int firstVisibleItem = gridLayoutManager.findFirstVisibleItemPosition();
 
                 if (isLoading) {
                     if (totalItemCount > previousTotal) {
@@ -102,20 +93,20 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     }
 
     @Override
-    public void setPresenter(@NonNull IMoviesContract.Presenter pPresenter) {
+    public void setPresenter(@NonNull final IMoviesContract.Presenter pPresenter) {
         //mPresenter = NotNull.check(pPresenter);
         mPresenter = pPresenter;
     }
 
     @Override
-    public void showMovies(List<Movie> pMovies) {
+    public void showMovies(final List<Movie> pMovies) {
         mMovieAdapter.notifyDataSetChanged();
         isLoading = false;
         mSmoothProgressBar.progressiveStop();
     }
 
     @Override
-    public void showFavoriteMovies(List<Movie> movies) {
+    public void showFavoriteMovies(final List<Movie> movies) {
         Toast.makeText(getContext(), "Favorite = "+ movies.size(), Toast.LENGTH_SHORT).show();
     }
 
@@ -127,7 +118,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     }
 
     @Override
-    public void setLoadingIndicator(boolean active) {
+    public void setLoadingIndicator(final boolean active) {
         isLoading = active;
 
     }
@@ -142,7 +133,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         @Override
         public void onCardClick(final IMovie pClickedMovie) {
             Toast.makeText(getContext(), "Card clicked", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
+            final Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
             intent.putExtra(Constants.MOVIE_OBJECT,(Movie)pClickedMovie);
             startActivity(intent);
         }
@@ -154,12 +145,12 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     };
 
     private void showCardPopupMenu(final IMovie pClickedMovie, final View pView) {
-        PopupMenu popup = new PopupMenu(getContext(), pView);
+        final PopupMenu popup = new PopupMenu(getContext(), pView);
         popup.getMenuInflater().inflate(R.menu.menu_movie_card, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
 
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            public boolean onMenuItemClick(final MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_like:
                         Toast.makeText(getContext(), "Like item clicked name="+pClickedMovie.getTitle(), Toast.LENGTH_SHORT).show();

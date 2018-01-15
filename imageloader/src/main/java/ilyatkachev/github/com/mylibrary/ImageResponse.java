@@ -9,15 +9,15 @@ public class ImageResponse {
     private Bitmap bitmap;
     private Exception exception;
 
-    public ImageResponse(ImageRequest request) {
+    public ImageResponse(final ImageRequest request) {
         this.request = request;
     }
 
-    public void setBitmap(Bitmap bitmap) {
+    public void setBitmap(final Bitmap bitmap) {
         this.bitmap = bitmap;
     }
 
-    public void setException(Exception exception) {
+    public void setException(final Exception exception) {
         this.exception = exception;
     }
 

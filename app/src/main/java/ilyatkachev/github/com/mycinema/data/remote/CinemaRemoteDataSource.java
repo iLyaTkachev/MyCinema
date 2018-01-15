@@ -16,17 +16,17 @@ import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 public class CinemaRemoteDataSource implements ICinemaDataSource {
 
     private static volatile CinemaRemoteDataSource INSTANCE;
-    private AppExecutors mAppExecutors;
-    private HttpClient mHttpClient;
-    private ApiProvider mApiProvider;
+    private final AppExecutors mAppExecutors;
+    private final HttpClient mHttpClient;
+    private final ApiProvider mApiProvider;
 
-    private CinemaRemoteDataSource(@NonNull AppExecutors pAppExecutors) {
+    private CinemaRemoteDataSource(@NonNull final AppExecutors pAppExecutors) {
         mAppExecutors = pAppExecutors;
         mHttpClient = new HttpClient();
         mApiProvider = new ApiProvider();
     }
 
-    public static CinemaRemoteDataSource getInstance(@NonNull AppExecutors pAppExecutors) {
+    public static CinemaRemoteDataSource getInstance(@NonNull final AppExecutors pAppExecutors) {
         if (INSTANCE == null) {
             synchronized (CinemaRemoteDataSource.class) {
                 if (INSTANCE == null) {
@@ -38,8 +38,8 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final int pPage, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
-        Runnable runnable = new Runnable() {
+    public void getMovies(final int pPage, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
+        final Runnable runnable = new Runnable() {
 
             @Override
             public void run() {
@@ -47,9 +47,9 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
                 mHttpClient.request(mApiProvider.getMovieList(pPage, pType), new IResponseListener() {
 
                     @Override
-                    public void onResponse(String pResult) throws Exception {
+                    public void onResponse(final String pResult) throws Exception {
                         Log.d("Tag" + "---" + pPage, "On response");
-                        ResponseParser responseParser = new ResponseParser();
+                        final ResponseParser responseParser = new ResponseParser();
                         final List movieList = responseParser.parse(pResult, new Movie(), "results");
                         mAppExecutors.getMainThread().execute(new Runnable() {
 
@@ -61,7 +61,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
                     }
 
                     @Override
-                    public void onError(Throwable pThrowable) {
+                    public void onError(final Throwable pThrowable) {
                         mAppExecutors.getMainThread().execute(new Runnable() {
 
                             @Override
@@ -84,12 +84,12 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getFavoriteMovies(@NonNull LoadObjectsCallback pCallback) {
+    public void getFavoriteMovies(@NonNull final LoadObjectsCallback pCallback) {
 
     }
 
     @Override
-    public void addFavoriteMovie(@NonNull Movie pMovie) {
+    public void addFavoriteMovie(@NonNull final Movie pMovie) {
 
     }
 }
