@@ -191,6 +191,8 @@ public class MoviesActivity extends AppCompatActivity {
         MoviesPresenter moviesPresenter = new MoviesPresenter(
                 fragment,
                 Injection.provideGetMovies(getApplicationContext()),
+                Injection.provideGetFavoriteMovies(getApplicationContext()),
+                Injection.provideAddFavoriteMovie(getApplicationContext()),
                 Injection.provideUseCaseHandler(),
                 pFilterType);
 

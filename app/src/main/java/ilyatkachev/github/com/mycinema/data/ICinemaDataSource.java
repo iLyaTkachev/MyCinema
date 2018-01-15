@@ -27,4 +27,8 @@ public interface ICinemaDataSource {
 
     void getMovie(@NonNull String pMovieId, @NonNull GetObjectCallback pCallback);
 
+    void getFavoriteMovies( @NonNull LoadObjectsCallback pCallback);
+
+    void addFavoriteMovie( @NonNull Movie pMovie);
+
 }

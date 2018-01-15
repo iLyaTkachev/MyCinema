@@ -78,4 +78,14 @@ public class CinemaRepository implements ICinemaDataSource {
     public void getMovie(@NonNull String pMovieId, @NonNull GetObjectCallback pCallback) {
 
     }
+
+    @Override
+    public void getFavoriteMovies(@NonNull LoadObjectsCallback pCallback) {
+        mMoviesLocalDataSource.getFavoriteMovies(pCallback);
+    }
+
+    @Override
+    public void addFavoriteMovie(@NonNull Movie pMovie) {
+        mMoviesLocalDataSource.addFavoriteMovie(pMovie);
+    }
 }

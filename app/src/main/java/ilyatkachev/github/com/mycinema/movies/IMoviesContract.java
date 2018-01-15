@@ -17,6 +17,8 @@ public interface IMoviesContract {
 
         void showMovies(List<T> movies);
 
+        void showFavoriteMovies(List<T> movies);
+
         void showLoadingError();
 
         void setLoadingIndicator(boolean active);
@@ -29,5 +31,9 @@ public interface IMoviesContract {
         void loadMovies(boolean forceUpdate);
 
         List<T> getMovieList();
+
+        void addToFavorite(T object);
+
+        void getFavoriteList();
     }
 }

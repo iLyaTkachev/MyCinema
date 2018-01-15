@@ -114,6 +114,11 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     }
 
     @Override
+    public void showFavoriteMovies(List<Movie> movies) {
+        Toast.makeText(getContext(), "Favorite = "+ movies.get(0).getTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void showLoadingError() {
         Toast.makeText(getContext(), "Loading Error", Toast.LENGTH_SHORT).show();
         mSmoothProgressBar.progressiveStop();
@@ -156,10 +161,11 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
                 switch (item.getItemId()) {
                     case R.id.action_like:
                         Toast.makeText(getContext(), "Like item clicked name="+pClickedMovie.getTitle(), Toast.LENGTH_SHORT).show();
-
+                        mPresenter.addToFavorite((Movie) pClickedMovie);
                         break;
                     case R.id.action_add:
-                        Toast.makeText(getContext(), "Add item clicked", Toast.LENGTH_SHORT).show();
+                        mPresenter.getFavoriteList();
+
                         break;
                 }
 

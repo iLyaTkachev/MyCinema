@@ -82,4 +82,14 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     public void getMovie(@NonNull final String pMovieId, @NonNull final GetObjectCallback pCallback) {
 
     }
+
+    @Override
+    public void getFavoriteMovies(@NonNull LoadObjectsCallback pCallback) {
+
+    }
+
+    @Override
+    public void addFavoriteMovie(@NonNull Movie pMovie) {
+
+    }
 }

@@ -20,45 +20,59 @@ public class Movie implements IMovie {
     @SerializedName("id")
     private int id;
 
-    @Ignore
-    @SerializedName("vote_count")
-    private int voteCount;
-    @SerializedName("video")
-    private boolean isVideo;
-    @SerializedName("vote_average")
-    private float voteAverage;
-
     @ColumnInfo(name = "title")
     @SerializedName("title")
     private String title;
+
+    @Ignore
+    @SerializedName("vote_count")
+    private int voteCount;
+    @Ignore
+    @SerializedName("video")
+    private boolean isVideo;
+    @Ignore
+    @SerializedName("vote_average")
+    private float voteAverage;
+    @Ignore
     @SerializedName("popularity")
     private float popularity;
+    @Ignore
     @SerializedName("poster_path")
     private String posterPath;
+    @Ignore
     @SerializedName("original_language")
     private String originalLanguage;
+    @Ignore
     @SerializedName("original_title")
     private String originalTitle;
-    @SerializedName("genre_ids")
-    private List<Integer> genreIds;
+    @Ignore
     @SerializedName("backdrop_path")
     private String backdropPath;
+    @Ignore
     @SerializedName("adult")
     private boolean isAdult;
+    @Ignore
     @SerializedName("overview")
     private String overview;
-
     @Ignore
     @SerializedName("release_date")
     private String releaseDate;
+
+    @Ignore
+    @SerializedName("genre_ids")
+    private List<Integer> genreIds;
+    @Ignore
     @SerializedName("page")
     private int page;
+
 
     public Movie() {
     }
 
-    public Movie(String pTitle) {
-        title = pTitle;
+    @Ignore
+    public Movie(int _id, String title) {
+        id = _id;
+        title = title;
     }
 
     @Override
@@ -147,5 +161,13 @@ public class Movie implements IMovie {
     @Override
     public int getPage() {
         return page;
+    }
+
+    public void setId(int pId) {
+        id = pId;
+    }
+
+    public void setTitle(String pTitle) {
+        title = pTitle;
     }
 }
