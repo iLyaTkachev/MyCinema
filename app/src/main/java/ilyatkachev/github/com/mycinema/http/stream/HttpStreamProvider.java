@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.http.V2;
+package ilyatkachev.github.com.mycinema.http.stream;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
@@ -11,7 +11,9 @@ import java.net.URLConnection;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class HttpStreamProvider implements StreamProvider<String> {
+import ilyatkachev.github.com.mycinema.util.IOUtils;
+
+public class HttpStreamProvider implements StreamProvider<String, HttpStreamProvider.HttpResponse> {
 
     private static final int READ_TIMEOUT = 10 * 1000;
     private static final int CONNECT_TIMEOUT = 5 * 1000;
@@ -19,7 +21,7 @@ public class HttpStreamProvider implements StreamProvider<String> {
     private static final String HTTPS = "https";
 
     @Override
-    public InputStream get(final String pUrl) throws IOException {
+    public HttpResponse get(final String pUrl) throws IOException {
 
         final HttpURLConnection connection;
         InputStream inputStream = null;
@@ -31,7 +33,8 @@ public class HttpStreamProvider implements StreamProvider<String> {
         }
         connection.setConnectTimeout(CONNECT_TIMEOUT);
         connection.setReadTimeout(READ_TIMEOUT);
-        return connection.getInputStream();
+        HttpResponse httpResponse = new HttpResponse(connection.getInputStream(), connection);
+        return httpResponse;
     }
 
     @VisibleForTesting
@@ -40,5 +43,29 @@ public class HttpStreamProvider implements StreamProvider<String> {
         final URL url = new URL(pUrl);
         final URLConnection connection = url.openConnection();
         return connection;
+    }
+
+    public class HttpResponse {
+
+        private final InputStream mInputStream;
+        private final HttpURLConnection mConnection;
+
+        public HttpResponse(final InputStream pInputStream, final HttpURLConnection pConnection) {
+            mInputStream = pInputStream;
+            mConnection = pConnection;
+        }
+
+        public void closeConnectionAndStream() {
+            IOUtils.closeStream(mInputStream);
+            mConnection.disconnect();
+        }
+
+        public InputStream getInputStream() {
+            return mInputStream;
+        }
+
+        public HttpURLConnection getConnection() {
+            return mConnection;
+        }
     }
 }

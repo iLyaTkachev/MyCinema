@@ -2,17 +2,14 @@ package ilyatkachev.github.com.mycinema.http;
 
 import android.support.annotation.NonNull;
 import android.support.annotation.VisibleForTesting;
-import android.util.Log;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
-import javax.net.ssl.HttpsURLConnection;
+import ilyatkachev.github.com.mycinema.http.stream.HttpStreamProvider;
 
 public class HttpClient implements IHttpClient {
 
@@ -21,32 +18,16 @@ public class HttpClient implements IHttpClient {
 
     @Override
     public void request(@NonNull final String pUrl, final IResponseListener pListener) {
-        HttpURLConnection connection = null;
-        InputStream inputStream = null;
-
+        HttpStreamProvider.HttpResponse httpResponse = null;
         try {
-            if (pUrl.contains(HTTPS)) {
-                connection = (HttpsURLConnection) getConnection(pUrl);
-            } else {
-                connection = (HttpURLConnection) getConnection(pUrl);
-            }
-            inputStream = connection.getInputStream();
-            String result = streamToString(inputStream);
-            pListener.onResponse(result);
-            connection.disconnect();
-            inputStream.close();
+            final HttpStreamProvider streamProvider = new HttpStreamProvider();
+            httpResponse = streamProvider.get(pUrl);
+            pListener.onResponse(httpResponse.getInputStream());
         } catch (final Throwable t) {
             pListener.onError(t);
         } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-            if (inputStream != null) {
-                try {
-                    inputStream.close();
-                } catch (final IOException ex) {
-                    Log.e(TAG, "executeRequest: " + ex.getMessage(), ex);
-                }
+            if (httpResponse != null) {
+                httpResponse.closeConnectionAndStream();
             }
         }
     }
@@ -65,7 +46,7 @@ public class HttpClient implements IHttpClient {
     }
 
     @VisibleForTesting
-    private String streamToString(final InputStream pInputStream) throws Exception{
+    private String streamToString(final InputStream pInputStream) throws Exception {
         final BufferedReader reader = new BufferedReader(new InputStreamReader(pInputStream));
         final StringBuilder stringBuilder = new StringBuilder();
         String line;

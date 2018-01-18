@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 
 public final class IOUtils {
 
@@ -12,10 +13,10 @@ public final class IOUtils {
     private IOUtils() {
     }
 
-    public static void closeStream(final Closeable stream) {
-        if (stream != null) {
+    public static void closeStream(final Closeable pStream) {
+        if (pStream != null) {
             try {
-                stream.close();
+                pStream.close();
             } catch (final IOException e) {
                 Log.e(LOG_TAG, "Could not close stream");
             }
