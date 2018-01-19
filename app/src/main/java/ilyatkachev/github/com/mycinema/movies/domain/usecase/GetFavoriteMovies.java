@@ -6,7 +6,6 @@ import java.util.List;
 
 import ilyatkachev.github.com.mycinema.data.CinemaRepository;
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
-import ilyatkachev.github.com.mycinema.movies.MoviesFilterType;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 
@@ -20,10 +19,10 @@ public class GetFavoriteMovies extends UseCase<GetFavoriteMovies.RequestValues, 
 
     @Override
     public void executeUseCase(final GetFavoriteMovies.RequestValues pRequestValues) {
-        mCinemaRepository.getFavoriteMovies(new ICinemaDataSource.LoadObjectsCallback<Movie>() {
+        mCinemaRepository.getFavoriteMedia(new ICinemaDataSource.LoadMediaCallback<Movie>() {
 
             @Override
-            public void onObjectsLoaded(final List<Movie> pMovies) {
+            public void onMediaLoaded(final List<Movie> pMovies) {
                 getUseCaseCallback().onSuccess(new GetFavoriteMovies.ResponseValue(pMovies));
             }
 

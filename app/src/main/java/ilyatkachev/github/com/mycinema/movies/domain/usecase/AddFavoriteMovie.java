@@ -15,7 +15,7 @@ public class AddFavoriteMovie extends UseCase<AddFavoriteMovie.RequestValues, Ad
 
     @Override
     public void executeUseCase(final AddFavoriteMovie.RequestValues pRequestValues) {
-        mCinemaRepository.addFavoriteMovie(pRequestValues.getMovie());
+        mCinemaRepository.addFavoriteMedia(pRequestValues.getMovie());
     }
 
     public static final class RequestValues implements UseCase.RequestValues {

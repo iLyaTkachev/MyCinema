@@ -3,172 +3,95 @@ package ilyatkachev.github.com.mycinema.movies.domain.model;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
-@Entity(tableName = "movies")
-public class Movie implements IMovie, Serializable {
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 
-    @PrimaryKey
-    @ColumnInfo(name = "_id")
-    @SerializedName("id")
-    private int id;
+@Entity(tableName = "movies")
+public class Movie extends BaseMediaObject implements Serializable {
 
     @ColumnInfo(name = "title")
     @SerializedName("title")
-    private String title;
+    private String mTitle;
 
-    @Ignore
-    @SerializedName("vote_count")
-    private int voteCount;
     @Ignore
     @SerializedName("video")
-    private boolean isVideo;
-    @Ignore
-    @SerializedName("vote_average")
-    private float voteAverage;
-    @Ignore
-    @SerializedName("popularity")
-    private float popularity;
-    @Ignore
-    @SerializedName("poster_path")
-    private String posterPath;
-    @Ignore
-    @SerializedName("original_language")
-    private String originalLanguage;
+    private boolean mIsVideo;
     @Ignore
     @SerializedName("original_title")
-    private String originalTitle;
-    @Ignore
-    @SerializedName("backdrop_path")
-    private String backdropPath;
+    private String mOriginalTitle;
     @Ignore
     @SerializedName("adult")
-    private boolean isAdult;
-    @Ignore
-    @SerializedName("overview")
-    private String overview;
+    private boolean mIsAdult;
     @Ignore
     @SerializedName("release_date")
-    private String releaseDate;
-
+    private String mReleaseDate;
     @Ignore
-    @SerializedName("genre_ids")
-    private List<Integer> genreIds;
-    @Ignore
-    @SerializedName("page")
-    private int page;
+    private int mPage;
 
-
-    public Movie() {
+    public Movie(final Integer pVoteCount, final Integer pId, final Double pVoteAverage, final Double pPopularity, final String pPosterPath, final String pOriginalLanguage, final List<Integer> pGenreIds, final String pBackdropPath, final String pOverview, final String pTitle, final boolean pIsVideo, final String pOriginalTitle, final boolean pIsAdult, final String pReleaseDate) {
+        super(pVoteCount, pId, pVoteAverage, pPopularity, pPosterPath, pOriginalLanguage, pGenreIds, pBackdropPath, pOverview);
+        mTitle = pTitle;
+        mIsVideo = pIsVideo;
+        mOriginalTitle = pOriginalTitle;
+        mIsAdult = pIsAdult;
+        mReleaseDate = pReleaseDate;
     }
 
-    @Ignore
-    public Movie(int _id, String title) {
-        id = _id;
-        title = title;
-    }
-
-    @Override
-    public int getVoteСount() {
-        return voteCount;
-    }
-
-    @Override
-    public int getId() {
-        return id;
-    }
-
-    @Override
-    public boolean isVideo() {
-        return isVideo;
-    }
-
-    @Override
-    public float getVoteAverage() {
-        return voteAverage;
-    }
-
-    @Override
     public String getTitle() {
-        return title;
+        return mTitle;
     }
 
-    @Override
-    public float getPopularity() {
-        return popularity;
+    public void setTitle(final String pTitle) {
+        mTitle = pTitle;
     }
 
-    @Override
-    public String getPosterPath() {
-        return posterPath;
+    public boolean isVideo() {
+        return mIsVideo;
     }
 
-    @Override
-    public String getOriginalLanguage() {
-        return originalLanguage;
+    public void setVideo(final boolean pVideo) {
+        mIsVideo = pVideo;
     }
 
-    @Override
     public String getOriginalTitle() {
-        return originalTitle;
+        return mOriginalTitle;
     }
 
-    @Override
-    public List<Integer> getGenreIds() {
-        return genreIds;
+    public void setOriginalTitle(final String pOriginalTitle) {
+        mOriginalTitle = pOriginalTitle;
     }
 
-    @Override
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    @Override
     public boolean isAdult() {
-        return isAdult;
+        return mIsAdult;
     }
 
-    @Override
-    public String getOverview() {
-        return overview;
+    public void setAdult(final boolean pAdult) {
+        mIsAdult = pAdult;
     }
 
-    @Override
     public String getReleaseDate() {
-        return releaseDate;
+        return mReleaseDate;
     }
 
-    @Override
-    public String getReleaseYear() {
-        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
-        try {
-            Date releaseDate = sdf1.parse(getReleaseDate());
-            return sdf2.format(releaseDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return "";
+    public void setReleaseDate(final String pReleaseDate) {
+        mReleaseDate = pReleaseDate;
     }
 
-    @Override
     public int getPage() {
-        return page;
+        return mPage;
     }
 
-    public void setId(int pId) {
-        id = pId;
+    public void setPage(final int pPage) {
+        mPage = pPage;
     }
 
-    public void setTitle(String pTitle) {
-        title = pTitle;
+    public String getReleaseYear() {
+        return super.getReleaseYear(mReleaseDate);
     }
+
 }

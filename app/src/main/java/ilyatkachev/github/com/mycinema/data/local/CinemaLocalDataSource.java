@@ -34,17 +34,17 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMovies(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadObjectsCallback pCallback) {
+    public void getMedia(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
         pCallback.onDataNotAvailable();
     }
 
     @Override
-    public void getMovie(@NonNull final String pMovieId, @NonNull final GetObjectCallback pCallback) {
+    public void getMedia(@NonNull final String pMovieId, @NonNull final GetMediaCallback pCallback) {
 
     }
 
     @Override
-    public void getFavoriteMovies(@NonNull final LoadObjectsCallback pCallback) {
+    public void getFavoriteMedia(@NonNull final LoadMediaCallback pCallback) {
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -56,7 +56,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
                             // This will be called if the table is new or just empty.
                             pCallback.onDataNotAvailable();
                         } else {
-                            pCallback.onObjectsLoaded(movies);
+                            pCallback.onMediaLoaded(movies);
                         }
                     }
                 });
@@ -67,7 +67,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void addFavoriteMovie(@NonNull final Movie pMovie) {
+    public void addFavoriteMedia(@NonNull final Movie pMovie) {
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {

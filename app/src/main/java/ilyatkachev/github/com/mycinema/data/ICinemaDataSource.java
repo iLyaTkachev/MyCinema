@@ -4,31 +4,32 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.IBaseCinemaObject;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 
 public interface ICinemaDataSource {
 
-    interface LoadObjectsCallback<T extends IBaseCinemaObject> {
+    interface LoadMediaCallback<T extends BaseMediaObject> {
 
-        void onObjectsLoaded(List<T> pObjects);
-
-        void onDataNotAvailable();
-    }
-
-    interface GetObjectCallback<T extends IBaseCinemaObject> {
-
-        void onMovieLoaded(T pObject);
+        void onMediaLoaded(List<T> pObjects);
 
         void onDataNotAvailable();
     }
 
-    void getMovies(@NonNull int pPath,@NonNull String pType, @NonNull LoadObjectsCallback pCallback);
+    interface GetMediaCallback<T extends BaseMediaObject> {
 
-    void getMovie(@NonNull String pMovieId, @NonNull GetObjectCallback pCallback);
+        void onMediaLoaded(T pObject);
 
-    void getFavoriteMovies( @NonNull LoadObjectsCallback pCallback);
+        void onDataNotAvailable();
+    }
 
-    void addFavoriteMovie( @NonNull Movie pMovie);
+    void getMedia(@NonNull int pPath, @NonNull String pType, @NonNull LoadMediaCallback pCallback);
+
+    void getMedia(@NonNull String pMovieId, @NonNull GetMediaCallback pCallback);
+
+    void getFavoriteMedia(@NonNull LoadMediaCallback pCallback);
+
+    void addFavoriteMedia(@NonNull BaseMediaObject pMovie);
 
 }
