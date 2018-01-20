@@ -7,22 +7,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import ilyatkachev.github.com.mycinema.R;
-import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
+import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.ImageLoaderWrapper;
-import ilyatkachev.github.com.mylibrary.ImageLib;
 
 public class MovieDetailsActivity extends AppCompatActivity {
 
     private AppBarLayout mAppBarLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    private IMovie mMovie;
+    private Movie mMovie;
 
     private ImageView mPosterImageView;
     private ImageView mBackdropImageView;

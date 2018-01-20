@@ -17,6 +17,9 @@ public abstract class BaseMediaResponse {
         this.mTotalPages = pTotalPages;
     }
 
+    public BaseMediaResponse() {
+    }
+
     public Integer getPage() {
         return mPage;
     }

@@ -16,6 +16,9 @@ public class MoviesResponse extends BaseMediaResponse {
         mMovieList = pMovieList;
     }
 
+    public MoviesResponse() {
+    }
+
     public List<Movie> getMovieList() {
         return mMovieList;
     }

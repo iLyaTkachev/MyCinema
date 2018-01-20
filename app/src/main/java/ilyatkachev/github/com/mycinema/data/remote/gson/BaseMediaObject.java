@@ -55,6 +55,9 @@ public abstract class BaseMediaObject implements Serializable {
         mOverview = pOverview;
     }
 
+    protected BaseMediaObject() {
+    }
+
     public Integer getVoteCount() {
         return mVoteCount;
     }

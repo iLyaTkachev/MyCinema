@@ -2,17 +2,14 @@ package ilyatkachev.github.com.mycinema.data;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
-import ilyatkachev.github.com.mycinema.data.remote.gson.IBaseCinemaObject;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
 
 public interface ICinemaDataSource {
 
-    interface LoadMediaCallback<T extends BaseMediaObject> {
+    interface LoadMediaCallback<T extends BaseMediaResponse> {
 
-        void onMediaLoaded(List<T> pObjects);
+        void onMediaLoaded(T pResponse);
 
         void onDataNotAvailable();
     }
@@ -24,7 +21,7 @@ public interface ICinemaDataSource {
         void onDataNotAvailable();
     }
 
-    void getMedia(@NonNull int pPath, @NonNull String pType, @NonNull LoadMediaCallback pCallback);
+    void getMedia(@NonNull BaseMediaResponse pResponse, @NonNull int pPath, @NonNull String pType, @NonNull LoadMediaCallback pCallback);
 
     void getMedia(@NonNull String pMovieId, @NonNull GetMediaCallback pCallback);
 

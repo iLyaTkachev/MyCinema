@@ -2,11 +2,11 @@ package ilyatkachev.github.com.mycinema.movies;
 
 import android.view.View;
 
-import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 
 public interface IMovieCardListener {
 
-    void onCardClick(IMovie pClickedMovie);
+    void onCardClick(BaseMediaObject pClickedMovie);
 
-    void onCardOverflowClick(IMovie pClickedMovie, View pView);
+    void onCardOverflowClick(BaseMediaObject pClickedMovie, View pView);
 }

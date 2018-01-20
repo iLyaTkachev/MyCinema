@@ -33,6 +33,7 @@ public class Movie extends BaseMediaObject implements Serializable {
     @Ignore
     private int mPage;
 
+    @Ignore
     public Movie(final Integer pVoteCount, final Integer pId, final Double pVoteAverage, final Double pPopularity, final String pPosterPath, final String pOriginalLanguage, final List<Integer> pGenreIds, final String pBackdropPath, final String pOverview, final String pTitle, final boolean pIsVideo, final String pOriginalTitle, final boolean pIsAdult, final String pReleaseDate) {
         super(pVoteCount, pId, pVoteAverage, pPopularity, pPosterPath, pOriginalLanguage, pGenreIds, pBackdropPath, pOverview);
         mTitle = pTitle;
@@ -40,6 +41,11 @@ public class Movie extends BaseMediaObject implements Serializable {
         mOriginalTitle = pOriginalTitle;
         mIsAdult = pIsAdult;
         mReleaseDate = pReleaseDate;
+    }
+
+    public Movie(final int _id, final String title) {
+        super.setId(_id);
+        mTitle = title;
     }
 
     public String getTitle() {

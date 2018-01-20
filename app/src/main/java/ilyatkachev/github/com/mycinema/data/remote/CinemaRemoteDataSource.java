@@ -3,14 +3,15 @@ package ilyatkachev.github.com.mycinema.data.remote;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import java.util.List;
+import java.io.InputStream;
 
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.remote.api.ApiProvider;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
 import ilyatkachev.github.com.mycinema.data.remote.gson.ResponseParser;
 import ilyatkachev.github.com.mycinema.http.HttpClient;
 import ilyatkachev.github.com.mycinema.http.IResponseListener;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 
 public class CinemaRemoteDataSource implements ICinemaDataSource {
@@ -38,7 +39,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMedia(final int pPage, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+    public void getMedia(@NonNull final BaseMediaResponse pResponseObject, @NonNull final int pPage, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
         final Runnable runnable = new Runnable() {
 
             @Override
@@ -47,15 +48,14 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
                 mHttpClient.request(mApiProvider.getMovieList(pPage, pType), new IResponseListener() {
 
                     @Override
-                    public void onResponse(final String pResult) throws Exception {
+                    public void onResponse(final InputStream pResult) {
                         Log.d("Tag" + "---" + pPage, "On response");
-                        final ResponseParser responseParser = new ResponseParser();
-                        final List movieList = responseParser.parse(pResult, new Movie(), "results");
+                        final BaseMediaResponse mediaResponse = (BaseMediaResponse)new ResponseParser().parse(pResult, pResponseObject);
                         mAppExecutors.getMainThread().execute(new Runnable() {
 
                             @Override
                             public void run() {
-                                pCallback.onMediaLoaded(movieList);
+                                pCallback.onMediaLoaded(mediaResponse);
                             }
                         });
                     }
@@ -89,7 +89,7 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void addFavoriteMedia(@NonNull final Movie pMovie) {
+    public void addFavoriteMedia(@NonNull final BaseMediaObject pMediaObject) {
 
     }
 }

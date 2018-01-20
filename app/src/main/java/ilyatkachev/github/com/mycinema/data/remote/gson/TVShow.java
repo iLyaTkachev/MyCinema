@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class TVShow implements IBaseCinemaObject{
+public class TVShow{
     @SerializedName("original_name")
     private String originalName;
     @SerializedName("id")

@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.R;
-import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
@@ -32,7 +31,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
 
     @Override
     public void onBindViewHolder(final MovieHolder holder, final int position) {
-        final IMovie movie = mMovies.get(position);
+        final Movie movie = mMovies.get(position);
         holder.bindMovie(movie, mMovieCardListener);
     }
 

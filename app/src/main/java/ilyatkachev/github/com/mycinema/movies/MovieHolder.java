@@ -7,13 +7,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ilyatkachev.github.com.mycinema.R;
-import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
+import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.ImageLoaderWrapper;
 
 public class MovieHolder extends RecyclerView.ViewHolder {
 
-    private IMovie mMovie;
+    private Movie mMovie;
 
     private final TextView mTitleTextView;
     private final TextView mDateTextView;
@@ -30,7 +30,7 @@ public class MovieHolder extends RecyclerView.ViewHolder {
         mCardView = itemView.findViewById(R.id.card_view);
     }
 
-    public void bindMovie(final IMovie pMovie, final IMovieCardListener pMovieCardListener) {
+    public void bindMovie(final Movie pMovie, final IMovieCardListener pMovieCardListener) {
         mMovie = pMovie;
         mTitleTextView.setText(mMovie.getTitle());
         mDateTextView.setText(mMovie.getReleaseYear());
