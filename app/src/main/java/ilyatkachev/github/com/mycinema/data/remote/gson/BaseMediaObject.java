@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public abstract class BaseMediaObject implements Serializable {
+
     @PrimaryKey
     @ColumnInfo(name = "_id")
     @SerializedName("id")
@@ -57,6 +58,8 @@ public abstract class BaseMediaObject implements Serializable {
 
     protected BaseMediaObject() {
     }
+
+    public abstract String getTitle();
 
     public Integer getVoteCount() {
         return mVoteCount;
@@ -130,7 +133,7 @@ public abstract class BaseMediaObject implements Serializable {
         mOverview = pOverview;
     }
 
-    protected String getReleaseYear(String pDate){
+    protected String getReleaseYear(String pDate) {
         final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
         final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy");
         try {
@@ -141,7 +144,5 @@ public abstract class BaseMediaObject implements Serializable {
         }
         return "";
     }
-
-
 
 }

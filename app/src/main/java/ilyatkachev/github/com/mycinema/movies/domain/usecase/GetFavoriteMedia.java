@@ -8,26 +8,24 @@ import ilyatkachev.github.com.mycinema.data.CinemaRepository;
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
-import ilyatkachev.github.com.mycinema.movies.MoviesFilterType;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
-import ilyatkachev.github.com.mycinema.movies.domain.model.MoviesResponse;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 
-public class GetMovies extends UseCase<GetMovies.RequestValues, GetMovies.ResponseValue> {
+public class GetFavoriteMedia extends UseCase<GetFavoriteMedia.RequestValues, GetFavoriteMedia.ResponseValue> {
 
     private final CinemaRepository mCinemaRepository;
 
-    public GetMovies(@NonNull final CinemaRepository pCinemaRepository) {
+    public GetFavoriteMedia(@NonNull final CinemaRepository pCinemaRepository) {
         mCinemaRepository = pCinemaRepository;
     }
 
     @Override
-    public void executeUseCase(final RequestValues pRequestValues) {
-        mCinemaRepository.getMedia(new MoviesResponse(), pRequestValues.getPage(), pRequestValues.getMoviesFilterType().toApiString(), new ICinemaDataSource.LoadMediaCallback<BaseMediaResponse>() {
+    public void executeUseCase(final GetFavoriteMedia.RequestValues pRequestValues) {
+        mCinemaRepository.getFavoriteMedia(new ICinemaDataSource.LoadMediaCallback<BaseMediaResponse>() {
 
             @Override
             public void onMediaLoaded(final BaseMediaResponse pMediaResponse) {
-                getUseCaseCallback().onSuccess(new ResponseValue(pMediaResponse));
+                getUseCaseCallback().onSuccess(new GetFavoriteMedia.ResponseValue(pMediaResponse));
             }
 
             @Override
@@ -39,20 +37,7 @@ public class GetMovies extends UseCase<GetMovies.RequestValues, GetMovies.Respon
 
     public static final class RequestValues implements UseCase.RequestValues {
 
-        private final int mPage;
-        private final MoviesFilterType mMoviesFilterType;
-
-        public RequestValues(final int pPage, @NonNull final MoviesFilterType pMoviesFilterType) {
-            mPage = pPage;
-            mMoviesFilterType = pMoviesFilterType;
-        }
-
-        public int getPage() {
-            return mPage;
-        }
-
-        public MoviesFilterType getMoviesFilterType() {
-            return mMoviesFilterType;
+        public RequestValues() {
         }
     }
 

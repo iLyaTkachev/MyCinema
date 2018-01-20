@@ -19,8 +19,8 @@ import java.util.List;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import ilyatkachev.github.com.mycinema.R;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
-import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
@@ -107,7 +107,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
 
     @Override
     public void showFavoriteMovies(final List<Movie> movies) {
-        Toast.makeText(getContext(), "Favorite = "+ movies.size(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Favorite = "+ movies.get(0).getTitle(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -131,7 +131,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     private IMovieCardListener mMovieCardListener = new IMovieCardListener() {
 
         @Override
-        public void onCardClick(final IMovie pClickedMovie) {
+        public void onCardClick(final BaseMediaObject pClickedMovie) {
             Toast.makeText(getContext(), "Card clicked", Toast.LENGTH_SHORT).show();
             final Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
             intent.putExtra(Constants.MOVIE_OBJECT,(Movie)pClickedMovie);
@@ -139,12 +139,12 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         }
 
         @Override
-        public void onCardOverflowClick(final IMovie pClickedMovie, final View pView) {
+        public void onCardOverflowClick(final BaseMediaObject pClickedMovie, final View pView) {
             showCardPopupMenu(pClickedMovie, pView);
         }
     };
 
-    private void showCardPopupMenu(final IMovie pClickedMovie, final View pView) {
+    private void showCardPopupMenu(final BaseMediaObject pClickedMovie, final View pView) {
         final PopupMenu popup = new PopupMenu(getContext(), pView);
         popup.getMenuInflater().inflate(R.menu.menu_movie_card, popup.getMenu());
         popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -167,4 +167,9 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         popup.show();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mMoviesRecyclerView.clearOnScrollListeners();
+    }
 }

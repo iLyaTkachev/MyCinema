@@ -19,7 +19,7 @@ public class MoviesResponse extends BaseMediaResponse {
     public MoviesResponse() {
     }
 
-    public List<Movie> getMovieList() {
+    public List<Movie> getMediaList() {
         return mMovieList;
     }
 

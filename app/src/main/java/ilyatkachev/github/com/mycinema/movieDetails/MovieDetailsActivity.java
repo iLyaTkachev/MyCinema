@@ -48,7 +48,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
 
         final Intent intent = getIntent();
-        mMovie = (IMovie) intent.getSerializableExtra(Constants.MOVIE_OBJECT);
+        mMovie = (Movie) intent.getSerializableExtra(Constants.MOVIE_OBJECT);
 
         final Toolbar toolbar = findViewById(R.id.movie_detail_toolbar);
         setSupportActionBar(toolbar);

@@ -7,8 +7,8 @@ import ilyatkachev.github.com.mycinema.data.CinemaRepository;
 import ilyatkachev.github.com.mycinema.data.local.CinemaLocalDataSource;
 import ilyatkachev.github.com.mycinema.data.local.db.MoviesDatabase;
 import ilyatkachev.github.com.mycinema.data.remote.CinemaRemoteDataSource;
-import ilyatkachev.github.com.mycinema.movies.domain.usecase.AddFavoriteMovie;
-import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetFavoriteMovies;
+import ilyatkachev.github.com.mycinema.movies.domain.usecase.AddFavoriteMedia;
+import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetFavoriteMedia;
 import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetMovies;
 import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCaseHandler;
@@ -27,12 +27,12 @@ public class Injection {
         return new GetMovies(provideCinemaRepository(pContext));
     }
 
-    public static GetFavoriteMovies provideGetFavoriteMovies(@NonNull final Context pContext) {
-        return new GetFavoriteMovies(provideCinemaRepository(pContext));
+    public static GetFavoriteMedia provideGetFavoriteMovies(@NonNull final Context pContext) {
+        return new GetFavoriteMedia(provideCinemaRepository(pContext));
     }
 
-    public static AddFavoriteMovie provideAddFavoriteMovie(@NonNull final Context pContext) {
-        return new AddFavoriteMovie(provideCinemaRepository(pContext));
+    public static AddFavoriteMedia provideAddFavoriteMovie(@NonNull final Context pContext) {
+        return new AddFavoriteMedia(provideCinemaRepository(pContext));
     }
 
     public static UseCaseHandler provideUseCaseHandler() {

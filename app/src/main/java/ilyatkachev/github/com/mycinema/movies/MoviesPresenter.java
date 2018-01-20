@@ -6,22 +6,21 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import ilyatkachev.github.com.mycinema.movies.domain.model.IMovie;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
-import ilyatkachev.github.com.mycinema.movies.domain.usecase.AddFavoriteMovie;
-import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetFavoriteMovies;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
+import ilyatkachev.github.com.mycinema.movies.domain.usecase.AddFavoriteMedia;
+import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetFavoriteMedia;
 import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetMovies;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCaseHandler;
 
-public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
+public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObject> {
 
     private static final String TAG = "MoviePresenter";
 
     private final IMoviesContract.View mView;
     private final GetMovies mGetMovies;
-    private final GetFavoriteMovies mGetFavoriteMovies;
-    private final AddFavoriteMovie mAddFavoriteMovie;
+    private final GetFavoriteMedia mGetFavoriteMedia;
+    private final AddFavoriteMedia mAddFavoriteMedia;
 
     private final UseCaseHandler mUseCaseHandler;
 
@@ -29,13 +28,13 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
 
     private final MoviesFilterType mMoviesFilterType;
     private int mCurrentPage;
-    private final List<Movie> mMovieList;
+    private final List<BaseMediaObject> mMovieList;
 
-    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMovies pGetMovies, final GetFavoriteMovies pGetFavoriteMovies, final AddFavoriteMovie pAddFavoriteMovie, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
+    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMovies pGetMovies, final GetFavoriteMedia pGetFavoriteMedia, final AddFavoriteMedia pAddFavoriteMedia, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
         mView = pView;
         mGetMovies = pGetMovies;
-        mGetFavoriteMovies = pGetFavoriteMovies;
-        mAddFavoriteMovie = pAddFavoriteMovie;
+        mGetFavoriteMedia = pGetFavoriteMedia;
+        mAddFavoriteMedia = pAddFavoriteMedia;
         mUseCaseHandler = pUseCaseHandler;
         mMoviesFilterType = pMoviesFilterType;
 
@@ -69,7 +68,7 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
 
             @Override
             public void onSuccess(final GetMovies.ResponseValue pResponse) {
-                mMovieList.addAll(pResponse.getMovies());
+                mMovieList.addAll(pResponse.getMediaList());
                 mCurrentPage++;
 
                 if (pShowLoadingUI) {
@@ -93,18 +92,18 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
     }
 
     @Override
-    public List<Movie> getMovieList() {
+    public List<BaseMediaObject> getMovieList() {
         return mMovieList;
     }
 
     @Override
-    public void addToFavorite(final Movie pMovie) {
-        final AddFavoriteMovie.RequestValues requestValues = new AddFavoriteMovie.RequestValues(pMovie);
+    public void addToFavorite(final BaseMediaObject pMediaObject) {
+        final AddFavoriteMedia.RequestValues requestValues = new AddFavoriteMedia.RequestValues(pMediaObject);
 
-        mUseCaseHandler.execute(mAddFavoriteMovie, requestValues, new UseCase.UseCaseCallback<AddFavoriteMovie.ResponseValue>() {
+        mUseCaseHandler.execute(mAddFavoriteMedia, requestValues, new UseCase.UseCaseCallback<AddFavoriteMedia.ResponseValue>() {
 
             @Override
-            public void onSuccess(final AddFavoriteMovie.ResponseValue pResponse) {
+            public void onSuccess(final AddFavoriteMedia.ResponseValue pResponse) {
                 Log.d(TAG,"Favorite movie added to db");
             }
 
@@ -118,11 +117,11 @@ public class MoviesPresenter implements IMoviesContract.Presenter<Movie> {
     @Override
     public void getFavoriteList() {
 
-        mUseCaseHandler.execute(mGetFavoriteMovies, new GetFavoriteMovies.RequestValues(), new UseCase.UseCaseCallback<GetFavoriteMovies.ResponseValue>() {
+        mUseCaseHandler.execute(mGetFavoriteMedia, new GetFavoriteMedia.RequestValues(), new UseCase.UseCaseCallback<GetFavoriteMedia.ResponseValue>() {
 
             @Override
-            public void onSuccess(final GetFavoriteMovies.ResponseValue pResponse) {
-                mView.showFavoriteMovies(pResponse.getMovies());
+            public void onSuccess(final GetFavoriteMedia.ResponseValue pResponse) {
+                mView.showFavoriteMovies(pResponse.getMediaList());
             }
 
             @Override

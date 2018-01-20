@@ -43,6 +43,9 @@ public class Movie extends BaseMediaObject implements Serializable {
         mReleaseDate = pReleaseDate;
     }
 
+    public Movie() {
+    }
+
     public Movie(final int _id, final String title) {
         super.setId(_id);
         mTitle = title;

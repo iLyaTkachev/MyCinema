@@ -40,7 +40,6 @@ public class TVShow{
         this.originalName = originalName;
     }
 
-    @Override
     public int getId() {
         return id;
     }

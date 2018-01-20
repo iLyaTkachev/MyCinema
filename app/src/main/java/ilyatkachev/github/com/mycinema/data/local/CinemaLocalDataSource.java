@@ -6,7 +6,10 @@ import java.util.List;
 
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.local.db.MoviesDao;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
+import ilyatkachev.github.com.mycinema.movies.domain.model.MoviesResponse;
 import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 
 public class CinemaLocalDataSource implements ICinemaDataSource {
@@ -34,7 +37,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMedia(@NonNull final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+    public void getMedia(@NonNull final BaseMediaResponse pMediaResponse, @NonNull final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
         pCallback.onDataNotAvailable();
     }
 
@@ -56,7 +59,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
                             // This will be called if the table is new or just empty.
                             pCallback.onDataNotAvailable();
                         } else {
-                            pCallback.onMediaLoaded(movies);
+                            pCallback.onMediaLoaded(new MoviesResponse(0,0,0,movies));
                         }
                     }
                 });
@@ -67,11 +70,11 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void addFavoriteMedia(@NonNull final Movie pMovie) {
+    public void addFavoriteMedia(@NonNull final BaseMediaObject pMediaObject) {
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-                mMoviesDao.insertMovie(pMovie);
+                mMoviesDao.insertMovie((Movie)pMediaObject);
             }
         };
         mAppExecutors.getDiskIO().execute(runnable);

@@ -4,6 +4,8 @@ import android.support.annotation.NonNull;
 
 import java.util.List;
 
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.NotNull;
 
@@ -38,33 +40,33 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     @Override
-    public void getMedia(final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+    public void getMedia(final BaseMediaResponse pMediaResponse, final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
         //First check local data source, if there are no movies with such page then use remote data source
-        getMoviesFromLocalDataSource(pPath,pType,pCallback);
+        getMediaFromLocalDataSource(pMediaResponse, pPath, pType, pCallback);
     }
 
-    private void getMoviesFromLocalDataSource(final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
-        mMoviesLocalDataSource.getMedia(pPath, pType, new LoadMediaCallback<Movie>() {
+    private void getMediaFromLocalDataSource(final BaseMediaResponse pMediaResponse, final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+        mMoviesLocalDataSource.getMedia(pMediaResponse, pPath, pType, new LoadMediaCallback<BaseMediaResponse>() {
 
             @Override
-            public void onMediaLoaded(final List<Movie> pMovies) {
-                pCallback.onMediaLoaded(pMovies);
+            public void onMediaLoaded(final BaseMediaResponse pResponse) {
+                pCallback.onMediaLoaded(pResponse);
             }
 
             @Override
             public void onDataNotAvailable() {
-                getMoviesFromRemoteDataSource(pPath, pType, pCallback);
+                getMediaFromRemoteDataSource(pMediaResponse, pPath, pType, pCallback);
             }
         });
     }
 
-    private void getMoviesFromRemoteDataSource(final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
-        mMoviesRemoteDataSource.getMedia(pPath, pType, new LoadMediaCallback<Movie>() {
+    private void getMediaFromRemoteDataSource(final BaseMediaResponse pMediaResponse, final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+        mMoviesRemoteDataSource.getMedia(pMediaResponse, pPath, pType, new LoadMediaCallback<BaseMediaResponse>() {
 
             @Override
-            public void onMediaLoaded(final List<Movie> pMovies) {
+            public void onMediaLoaded(final BaseMediaResponse pResponse) {
                 //refreshLocalDataSource();
-                pCallback.onMediaLoaded(pMovies);
+                pCallback.onMediaLoaded(pResponse);
             }
 
             @Override
@@ -85,7 +87,7 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     @Override
-    public void addFavoriteMedia(@NonNull final Movie pMovie) {
-        mMoviesLocalDataSource.addFavoriteMedia(pMovie);
+    public void addFavoriteMedia(@NonNull final BaseMediaObject pMediaObject) {
+        mMoviesLocalDataSource.addFavoriteMedia(pMediaObject);
     }
 }

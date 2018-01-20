@@ -2,6 +2,8 @@ package ilyatkachev.github.com.mycinema.data.remote.gson;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public abstract class BaseMediaResponse {
 
     @SerializedName("page")
@@ -19,6 +21,8 @@ public abstract class BaseMediaResponse {
 
     public BaseMediaResponse() {
     }
+
+    public abstract List getMediaList();
 
     public Integer getPage() {
         return mPage;
