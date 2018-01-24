@@ -24,6 +24,7 @@ import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
 import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
+import ilyatkachev.github.com.mycinema.util.RVOnScrollListener;
 
 public class MovieListFragment extends Fragment implements IMoviesContract.View<Movie> {
 
@@ -33,17 +34,17 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     private MovieAdapter mMovieAdapter;
     private SmoothProgressBar mSmoothProgressBar;
 
-    private int previousTotal = 0;
-    private final int visibleThreshold = 5;
-    private boolean isLoading = false;
+    private RVOnScrollListener mOnScrollListener;
+
+    public static final int VISIBLE_THRESHOLD = 5;
 
     @Nullable
     @Override
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.movies_frag, container, false);
 
-        mSmoothProgressBar = (SmoothProgressBar) view.findViewById(R.id.smooth_progress_bar);
-        mMoviesRecyclerView = (RecyclerView) view.findViewById(R.id.loaded_movies_recycler_view);
+        mSmoothProgressBar = view.findViewById(R.id.smooth_progress_bar);
+        mMoviesRecyclerView = view.findViewById(R.id.loaded_movies_recycler_view);
         mMovieAdapter = new MovieAdapter(this.getContext(), mPresenter.getMovieList(), mMovieCardListener);
         mMoviesRecyclerView.setAdapter(mMovieAdapter);
         setupLayoutManager(mMoviesRecyclerView);
@@ -66,30 +67,18 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         }
     }
 
-    private void setupScrollListener(@NonNull final RecyclerView pRecyclerView){
-        mMoviesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+    private void setupScrollListener(@NonNull final RecyclerView pRecyclerView) {
+        if (mOnScrollListener == null) {
+            mOnScrollListener = new RVOnScrollListener(VISIBLE_THRESHOLD, new RVOnScrollListener.IScrolled() {
 
-                final GridLayoutManager gridLayoutManager = (GridLayoutManager)pRecyclerView.getLayoutManager();
-                final int visibleItemCount = gridLayoutManager.getChildCount();
-                final int totalItemCount = gridLayoutManager.getItemCount();
-                final int firstVisibleItem = gridLayoutManager.findFirstVisibleItemPosition();
-
-                if (isLoading) {
-                    if (totalItemCount > previousTotal) {
-
-                        previousTotal = totalItemCount;
-                    }
-                }
-                if (!isLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
+                @Override
+                public void loadData() {
                     mPresenter.loadMovies(false);
-                    isLoading = true;
                     mSmoothProgressBar.progressiveStart();
                 }
-
-            }
-        });
+            });
+        }
+        mMoviesRecyclerView.addOnScrollListener(mOnScrollListener);
     }
 
     @Override
@@ -101,25 +90,25 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     @Override
     public void showMovies(final List<Movie> pMovies) {
         mMovieAdapter.notifyDataSetChanged();
-        isLoading = false;
+        mOnScrollListener.setLoading(false);
         mSmoothProgressBar.progressiveStop();
     }
 
     @Override
     public void showFavoriteMovies(final List<Movie> movies) {
-        Toast.makeText(getContext(), "Favorite = "+ movies.get(0).getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), "Favorite = " + movies.get(0).getTitle(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void showLoadingError() {
         Toast.makeText(getContext(), "Loading Error", Toast.LENGTH_SHORT).show();
         mSmoothProgressBar.progressiveStop();
-        isLoading = false;
+        mOnScrollListener.setLoading(false);
     }
 
     @Override
     public void setLoadingIndicator(final boolean active) {
-        isLoading = active;
+        mOnScrollListener.setLoading(active);
 
     }
 
@@ -134,7 +123,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         public void onCardClick(final BaseMediaObject pClickedMovie) {
             Toast.makeText(getContext(), "Card clicked", Toast.LENGTH_SHORT).show();
             final Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
-            intent.putExtra(Constants.MOVIE_OBJECT,(Movie)pClickedMovie);
+            intent.putExtra(Constants.MOVIE_OBJECT, pClickedMovie);
             startActivity(intent);
         }
 
@@ -153,7 +142,7 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
             public boolean onMenuItemClick(final MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_like:
-                        Toast.makeText(getContext(), "Like item clicked name="+pClickedMovie.getTitle(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Like item clicked name=" + pClickedMovie.getTitle(), Toast.LENGTH_SHORT).show();
                         mPresenter.addToFavorite((Movie) pClickedMovie);
                         break;
                     case R.id.action_add:

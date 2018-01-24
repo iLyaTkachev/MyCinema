@@ -9,7 +9,7 @@ import java.util.List;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.movies.domain.usecase.AddFavoriteMedia;
 import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetFavoriteMedia;
-import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetMovies;
+import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetMedia;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCaseHandler;
 
@@ -18,7 +18,7 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
     private static final String TAG = "MoviePresenter";
 
     private final IMoviesContract.View mView;
-    private final GetMovies mGetMovies;
+    private final GetMedia mGetMedia;
     private final GetFavoriteMedia mGetFavoriteMedia;
     private final AddFavoriteMedia mAddFavoriteMedia;
 
@@ -30,9 +30,9 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
     private int mCurrentPage;
     private final List<BaseMediaObject> mMovieList;
 
-    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMovies pGetMovies, final GetFavoriteMedia pGetFavoriteMedia, final AddFavoriteMedia pAddFavoriteMedia, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
+    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMedia pGetMedia, final GetFavoriteMedia pGetFavoriteMedia, final AddFavoriteMedia pAddFavoriteMedia, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
         mView = pView;
-        mGetMovies = pGetMovies;
+        mGetMedia = pGetMedia;
         mGetFavoriteMedia = pGetFavoriteMedia;
         mAddFavoriteMedia = pAddFavoriteMedia;
         mUseCaseHandler = pUseCaseHandler;
@@ -62,12 +62,12 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
         if (pShowLoadingUI) {
 
         }
-        final GetMovies.RequestValues requestValues = new GetMovies.RequestValues(mCurrentPage, mMoviesFilterType);
+        final GetMedia.RequestValues requestValues = new GetMedia.RequestValues(mCurrentPage, mMoviesFilterType);
 
-        mUseCaseHandler.execute(mGetMovies, requestValues, new UseCase.UseCaseCallback<GetMovies.ResponseValue>() {
+        mUseCaseHandler.execute(mGetMedia, requestValues, new UseCase.UseCaseCallback<GetMedia.ResponseValue>() {
 
             @Override
-            public void onSuccess(final GetMovies.ResponseValue pResponse) {
+            public void onSuccess(final GetMedia.ResponseValue pResponse) {
                 mMovieList.addAll(pResponse.getMediaList());
                 mCurrentPage++;
 

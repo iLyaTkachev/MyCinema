@@ -9,15 +9,14 @@ import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
 import ilyatkachev.github.com.mycinema.movies.MoviesFilterType;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.movies.domain.model.MoviesResponse;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 
-public class GetMovies extends UseCase<GetMovies.RequestValues, GetMovies.ResponseValue> {
+public class GetMedia extends UseCase<GetMedia.RequestValues, GetMedia.ResponseValue> {
 
     private final CinemaRepository mCinemaRepository;
 
-    public GetMovies(@NonNull final CinemaRepository pCinemaRepository) {
+    public GetMedia(@NonNull final CinemaRepository pCinemaRepository) {
         mCinemaRepository = pCinemaRepository;
     }
 
@@ -67,5 +66,6 @@ public class GetMovies extends UseCase<GetMovies.RequestValues, GetMovies.Respon
         public List<BaseMediaObject> getMediaList() {
             return mMediaResponse.getMediaList();
         }
+
     }
 }
