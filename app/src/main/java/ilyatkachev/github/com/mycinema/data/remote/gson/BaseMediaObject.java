@@ -61,6 +61,8 @@ public abstract class BaseMediaObject implements Serializable {
 
     public abstract String getTitle();
 
+    public abstract String getOriginalTitle();
+
     public Integer getVoteCount() {
         return mVoteCount;
     }
@@ -145,4 +147,5 @@ public abstract class BaseMediaObject implements Serializable {
         return "";
     }
 
+    public abstract String getReleaseYear();
 }

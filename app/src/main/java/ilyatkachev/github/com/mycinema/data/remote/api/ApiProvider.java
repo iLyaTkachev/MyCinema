@@ -18,25 +18,9 @@ public class ApiProvider {
     public ApiProvider() {
     }
 
-    public String getPopularMovieList(final int pPage) {
-        return getMovieList(pPage, Constants.ApiValues.POPULAR);
-    }
-
-    public String getTopRatedMovieList(final int pPage) {
-        return getMovieList(pPage, Constants.ApiValues.TOP_RATED);
-    }
-
-    public String getUpcomingMovieList(final int pPage) {
-        return getMovieList(pPage, Constants.ApiValues.UPCOMING);
-    }
-
-    public String getNowPlayingMovieList(final int pPage) {
-        return getMovieList(pPage, Constants.ApiValues.NOW_PLAYING);
-    }
-
-    public String getMovieList(final int pPage, final String pType) {
+    public String getMedia(final String pType, final int pPage, final String pFilterType) {
         final Uri uri = Uri.parse(Constants.ApiValues.BASE_URL).buildUpon()
-                .appendPath(Constants.ApiValues.MOVIE).appendPath(pType)
+                .appendPath(pType).appendPath(pFilterType)
                 .appendQueryParameter(Constants.ApiValues.API_KEY, SECRET_KEY)
                 .appendQueryParameter(Constants.ApiValues.LANGUAGE, Constants.ApiValues.ENGLISH_LANG)
                 .appendQueryParameter(Constants.ApiValues.PAGE, String.valueOf(pPage)).build();
@@ -45,5 +29,4 @@ public class ApiProvider {
 
         return url;
     }
-
 }

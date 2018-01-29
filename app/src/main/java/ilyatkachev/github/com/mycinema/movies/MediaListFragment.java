@@ -26,12 +26,12 @@ import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
 import ilyatkachev.github.com.mycinema.util.RVOnScrollListener;
 
-public class MovieListFragment extends Fragment implements IMoviesContract.View<Movie> {
+public class MediaListFragment extends Fragment implements IMediaContract.View<Movie> {
 
-    private IMoviesContract.Presenter<Movie> mPresenter;
+    private IMediaContract.Presenter<BaseMediaObject> mPresenter;
 
-    private RecyclerView mMoviesRecyclerView;
-    private MovieAdapter mMovieAdapter;
+    private RecyclerView mMediaRecyclerView;
+    private MediaAdapter mMediaAdapter;
     private SmoothProgressBar mSmoothProgressBar;
 
     private RVOnScrollListener mOnScrollListener;
@@ -44,11 +44,11 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         final View view = inflater.inflate(R.layout.movies_frag, container, false);
 
         mSmoothProgressBar = view.findViewById(R.id.smooth_progress_bar);
-        mMoviesRecyclerView = view.findViewById(R.id.loaded_movies_recycler_view);
-        mMovieAdapter = new MovieAdapter(this.getContext(), mPresenter.getMovieList(), mMovieCardListener);
-        mMoviesRecyclerView.setAdapter(mMovieAdapter);
-        setupLayoutManager(mMoviesRecyclerView);
-        setupScrollListener(mMoviesRecyclerView);
+        mMediaRecyclerView = view.findViewById(R.id.loaded_movies_recycler_view);
+        mMediaAdapter = new MediaAdapter(this.getContext(), mPresenter.getMediaList(), mMovieCardListener);
+        mMediaRecyclerView.setAdapter(mMediaAdapter);
+        setupLayoutManager(mMediaRecyclerView);
+        setupScrollListener(mMediaRecyclerView);
 
         mPresenter.start();
 
@@ -73,30 +73,30 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
 
                 @Override
                 public void loadData() {
-                    mPresenter.loadMovies(false);
+                    mPresenter.loadMedia(false);
                     mSmoothProgressBar.progressiveStart();
                 }
             });
         }
-        mMoviesRecyclerView.addOnScrollListener(mOnScrollListener);
+        mMediaRecyclerView.addOnScrollListener(mOnScrollListener);
     }
 
     @Override
-    public void setPresenter(@NonNull final IMoviesContract.Presenter pPresenter) {
+    public void setPresenter(@NonNull final IMediaContract.Presenter pPresenter) {
         //mPresenter = NotNull.check(pPresenter);
         mPresenter = pPresenter;
     }
 
     @Override
-    public void showMovies(final List<Movie> pMovies) {
-        mMovieAdapter.notifyDataSetChanged();
+    public void showMediaList(final List<Movie> pMedia) {
+        mMediaAdapter.notifyDataSetChanged();
         mOnScrollListener.setLoading(false);
         mSmoothProgressBar.progressiveStop();
     }
 
     @Override
-    public void showFavoriteMovies(final List<Movie> movies) {
-        Toast.makeText(getContext(), "Favorite = " + movies.get(0).getTitle(), Toast.LENGTH_SHORT).show();
+    public void showFavoriteMediaList(final List<Movie> pMedia) {
+        Toast.makeText(getContext(), "Favorite = " + pMedia.get(0).getTitle(), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -117,19 +117,19 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
         return false;
     }
 
-    private IMovieCardListener mMovieCardListener = new IMovieCardListener() {
+    private IMediaCardListener mMovieCardListener = new IMediaCardListener() {
 
         @Override
-        public void onCardClick(final BaseMediaObject pClickedMovie) {
+        public void onCardClick(final BaseMediaObject pClickedMedia) {
             Toast.makeText(getContext(), "Card clicked", Toast.LENGTH_SHORT).show();
             final Intent intent = new Intent(getContext(), MovieDetailsActivity.class);
-            intent.putExtra(Constants.MOVIE_OBJECT, pClickedMovie);
+            intent.putExtra(Constants.MOVIE_OBJECT, pClickedMedia);
             startActivity(intent);
         }
 
         @Override
-        public void onCardOverflowClick(final BaseMediaObject pClickedMovie, final View pView) {
-            showCardPopupMenu(pClickedMovie, pView);
+        public void onCardOverflowClick(final BaseMediaObject pClickedMedia, final View pView) {
+            showCardPopupMenu(pClickedMedia, pView);
         }
     };
 
@@ -159,6 +159,6 @@ public class MovieListFragment extends Fragment implements IMoviesContract.View<
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        mMoviesRecyclerView.clearOnScrollListeners();
+        mMediaRecyclerView.clearOnScrollListeners();
     }
 }

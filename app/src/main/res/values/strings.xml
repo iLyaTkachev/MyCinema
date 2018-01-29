@@ -4,8 +4,11 @@
     <string name="in_theaters_tab">in theaters</string>
     <string name="upcoming_tab">upcoming</string>
     <string name="top_rated_tab">top rated</string>
+    <string name="airing_today">airing today</string>
+    <string name="on_the_air">on the air</string>
     <string name="empty_string"/>
     <string name="movies_activity_title">Movies</string>
+    <string name="tv_activity_title">TV Shows</string>
     <string name="like_card_action">Like</string>
     <string name="add_card_action">Add</string>
     <string name="movies_nav_item">Movies</string>

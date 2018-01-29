@@ -23,15 +23,15 @@ public class Injection {
                 CinemaLocalDataSource.getInstance(appExecutors, moviesDatabase.getMovieDao()));
     }
 
-    public static GetMedia provideGetMovies(@NonNull final Context pContext) {
+    public static GetMedia provideGetMedia(@NonNull final Context pContext) {
         return new GetMedia(provideCinemaRepository(pContext));
     }
 
-    public static GetFavoriteMedia provideGetFavoriteMovies(@NonNull final Context pContext) {
+    public static GetFavoriteMedia provideGetFavoriteMedia(@NonNull final Context pContext) {
         return new GetFavoriteMedia(provideCinemaRepository(pContext));
     }
 
-    public static AddFavoriteMedia provideAddFavoriteMovie(@NonNull final Context pContext) {
+    public static AddFavoriteMedia provideAddFavoriteMedia(@NonNull final Context pContext) {
         return new AddFavoriteMedia(provideCinemaRepository(pContext));
     }
 

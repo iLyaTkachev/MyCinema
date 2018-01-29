@@ -9,13 +9,13 @@ import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 /**
  * This interface specifies contract between View and Presenter.
  */
-public interface IMoviesContract {
+public interface IMediaContract {
 
     interface View<T extends BaseMediaObject> extends IBaseView<Presenter> {
 
-        void showMovies(List<T> movies);
+        void showMediaList(List<T> pMedia);
 
-        void showFavoriteMovies(List<T> movies);
+        void showFavoriteMediaList(List<T> pMedia);
 
         void showLoadingError();
 
@@ -26,9 +26,9 @@ public interface IMoviesContract {
 
     interface Presenter<T extends BaseMediaObject> extends IBasePresenter {
 
-        void loadMovies(boolean forceUpdate);
+        void loadMedia(boolean forceUpdate);
 
-        List<T> getMovieList();
+        List<T> getMediaList();
 
         void addToFavorite(T object);
 

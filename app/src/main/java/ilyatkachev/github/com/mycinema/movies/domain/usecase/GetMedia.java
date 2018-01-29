@@ -8,8 +8,10 @@ import ilyatkachev.github.com.mycinema.data.CinemaRepository;
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
-import ilyatkachev.github.com.mycinema.movies.MoviesFilterType;
+import ilyatkachev.github.com.mycinema.movies.MediaFilterType;
+import ilyatkachev.github.com.mycinema.movies.MediaType;
 import ilyatkachev.github.com.mycinema.movies.domain.model.MoviesResponse;
+import ilyatkachev.github.com.mycinema.tvshows.TVShowsResponse;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 
 public class GetMedia extends UseCase<GetMedia.RequestValues, GetMedia.ResponseValue> {
@@ -22,7 +24,16 @@ public class GetMedia extends UseCase<GetMedia.RequestValues, GetMedia.ResponseV
 
     @Override
     public void executeUseCase(final RequestValues pRequestValues) {
-        mCinemaRepository.getMedia(new MoviesResponse(), pRequestValues.getPage(), pRequestValues.getMoviesFilterType().toApiString(), new ICinemaDataSource.LoadMediaCallback<BaseMediaResponse>() {
+        BaseMediaResponse mediaResponse = null;
+        switch (pRequestValues.mMediaType) {
+            case MOVIE:
+                mediaResponse = new MoviesResponse();
+                break;
+            case TV:
+                mediaResponse = new TVShowsResponse();
+                break;
+        }
+        mCinemaRepository.getMedia(mediaResponse, pRequestValues.getMediaType().toApiString(), pRequestValues.getPage(), pRequestValues.getMediaFilterType().toApiString(), new ICinemaDataSource.LoadMediaCallback<BaseMediaResponse>() {
 
             @Override
             public void onMediaLoaded(final BaseMediaResponse pMediaResponse) {
@@ -39,19 +50,25 @@ public class GetMedia extends UseCase<GetMedia.RequestValues, GetMedia.ResponseV
     public static final class RequestValues implements UseCase.RequestValues {
 
         private final int mPage;
-        private final MoviesFilterType mMoviesFilterType;
+        private final MediaFilterType mMediaFilterType;
+        private final MediaType mMediaType;
 
-        public RequestValues(final int pPage, @NonNull final MoviesFilterType pMoviesFilterType) {
+        public RequestValues(final MediaType pMediaType, final int pPage, @NonNull final MediaFilterType pMediaFilterType) {
+            mMediaType = pMediaType;
             mPage = pPage;
-            mMoviesFilterType = pMoviesFilterType;
+            mMediaFilterType = pMediaFilterType;
         }
 
         public int getPage() {
             return mPage;
         }
 
-        public MoviesFilterType getMoviesFilterType() {
-            return mMoviesFilterType;
+        public MediaFilterType getMediaFilterType() {
+            return mMediaFilterType;
+        }
+
+        public MediaType getMediaType() {
+            return mMediaType;
         }
     }
 

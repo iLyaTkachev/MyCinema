@@ -23,13 +23,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.R;
+import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.ImageLoaderWrapper;
 import ilyatkachev.github.com.mycinema.util.Injection;
 import ilyatkachev.github.com.mycinema.util.ViewPagerAdapter;
 
-public class MoviesActivity extends AppCompatActivity {
+public class MediaActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private MediaType mMediaType;
+    private ViewPager mViewPager;
 
     String[] movieGenresList;
     boolean[] checkedGenres;
@@ -41,27 +44,33 @@ public class MoviesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movies);
         ImageLoaderWrapper.setConfig(getCacheDir());
 
+        if (savedInstanceState != null) {
+            mMediaType = (MediaType) savedInstanceState.getSerializable(Constants.TYPE_KEY);
+        } else {
+            mMediaType = MediaType.MOVIE;
+        }
+
         // Set up the custom toolbar.
-        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
             setupToolbar(toolbar);
         }
 
         // Set up the navigation drawer.
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        final NavigationView nvDrawer = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView nvDrawer = findViewById(R.id.nav_view);
         if (nvDrawer != null) {
             setupDrawerContent(nvDrawer);
         }
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.view_pager);
-        if (viewPager != null) {
-            setupViewPager(viewPager);
+        mViewPager = findViewById(R.id.view_pager);
+        if (mViewPager != null) {
+            setupViewPager(mViewPager);
         }
 
-        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
+        final TabLayout tabLayout = findViewById(R.id.tabs);
+        tabLayout.setupWithViewPager(mViewPager);
 
         movieGenresList = getResources().getStringArray(R.array.movie_genres);
         checkedGenres = new boolean[movieGenresList.length];
@@ -81,8 +90,8 @@ public class MoviesActivity extends AppCompatActivity {
 
     private void setupToolbar(final Toolbar pToolbar) {
         pToolbar.setTitle(R.string.empty_string);
-        final TextView toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(R.string.movies_activity_title);
+        final TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarTitle.setText(mMediaType.toString());
         setSupportActionBar(pToolbar);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -179,37 +188,37 @@ public class MoviesActivity extends AppCompatActivity {
     private void setupViewPager(final ViewPager viewPager) {
         //during rotation adapter first check FragementManager, if there no such fragment, then it takes fragment from the list
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.POPULAR), getString(R.string.popular_tab));
-        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.NOW_PLAYING), getString(R.string.in_theaters_tab));
-        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.UPCOMING), getString(R.string.upcoming_tab));
-        adapter.addFragment(createFragmentWithPresenter(MoviesFilterType.TOP_RATED), getString(R.string.top_rated_tab));
+
+        for (int i = 0; i < mMediaType.getFilterTypes().length; i++) {
+            MediaFilterType mediaFilterType = mMediaType.getFilterTypes()[i];
+            adapter.addFragment(createFragmentWithPresenter(mMediaType, mediaFilterType), mediaFilterType.toString());
+        }
         viewPager.setAdapter(adapter);
     }
 
-    private Fragment createFragmentWithPresenter(final MoviesFilterType pFilterType) {
-        final MovieListFragment fragment = new MovieListFragment();
-        final MoviesPresenter moviesPresenter = new MoviesPresenter(
+    private Fragment createFragmentWithPresenter(final MediaType pMediaType, final MediaFilterType pFilterType) {
+        final MediaListFragment fragment = new MediaListFragment();
+        final MediaPresenter mediaPresenter = new MediaPresenter(
                 fragment,
-                Injection.provideGetMovies(getApplicationContext()),
-                Injection.provideGetFavoriteMovies(getApplicationContext()),
-                Injection.provideAddFavoriteMovie(getApplicationContext()),
+                Injection.provideGetMedia(getApplicationContext()),
+                Injection.provideGetFavoriteMedia(getApplicationContext()),
+                Injection.provideAddFavoriteMedia(getApplicationContext()),
                 Injection.provideUseCaseHandler(),
+                pMediaType,
                 pFilterType);
 
         return fragment;
     }
 
     public void selectDrawerItem(final MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
-        //Fragment fragment = null;
-        //Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.movies_navigation_menu_item:
-                Toast.makeText(getApplicationContext(), "1", Toast.LENGTH_SHORT).show();
-                //fragmentClass = FirstFragment.class;
+                mMediaType = MediaType.MOVIE;
+                setupViewPager(mViewPager);
                 break;
             case R.id.tv_shows_navigation_menu_item:
-                //fragmentClass = SecondFragment.class;
+                mMediaType = MediaType.TV;
+                setupViewPager(mViewPager);
                 break;
             case R.id.people_navigation_menu_item:
                 //fragmentClass = ThirdFragment.class;
@@ -230,32 +239,25 @@ public class MoviesActivity extends AppCompatActivity {
                 //fragmentClass = FirstFragment.class;
         }
 
-        try {
-            //fragment = (Fragment) fragmentClass.newInstance();
-        } catch (final Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
-        // Set action bar title
         setTitle(menuItem.getTitle());
-        // Close the navigation drawer
         mDrawerLayout.closeDrawers();
     }
 
     @Override
     public void onBackPressed() {
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable(Constants.TYPE_KEY, mMediaType);
+        super.onSaveInstanceState(outState);
     }
 
 }

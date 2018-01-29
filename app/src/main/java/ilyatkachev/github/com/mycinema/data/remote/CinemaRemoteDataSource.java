@@ -16,6 +16,8 @@ import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 
 public class CinemaRemoteDataSource implements ICinemaDataSource {
 
+    private static final String TAG = "Remote Data Source";
+
     private static volatile CinemaRemoteDataSource INSTANCE;
     private final AppExecutors mAppExecutors;
     private final HttpClient mHttpClient;
@@ -39,18 +41,18 @@ public class CinemaRemoteDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMedia(@NonNull final BaseMediaResponse pResponseObject, @NonNull final int pPage, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+    public void getMedia(@NonNull final BaseMediaResponse pResponseObject, @NonNull final String pType, @NonNull final int pPage, @NonNull final String pFilterType, @NonNull final LoadMediaCallback pCallback) {
         final Runnable runnable = new Runnable() {
 
             @Override
             public void run() {
-                Log.d("Tag" + "---" + pPage, "Make a request");
-                mHttpClient.request(mApiProvider.getMovieList(pPage, pType), new IResponseListener() {
+                Log.d(TAG + "---" + pPage, "Make a request");
+                mHttpClient.request(mApiProvider.getMedia(pType, pPage, pFilterType), new IResponseListener() {
 
                     @Override
                     public void onResponse(final InputStream pResult) {
-                        Log.d("Tag" + "---" + pPage, "On response");
-                        final BaseMediaResponse mediaResponse = (BaseMediaResponse)new ResponseParser().parse(pResult, pResponseObject);
+                        Log.d(TAG + "---" + pPage, "On response");
+                        final BaseMediaResponse mediaResponse = (BaseMediaResponse) new ResponseParser().parse(pResult, pResponseObject);
                         mAppExecutors.getMainThread().execute(new Runnable() {
 
                             @Override

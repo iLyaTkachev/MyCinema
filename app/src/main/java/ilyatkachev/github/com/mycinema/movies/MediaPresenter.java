@@ -13,11 +13,11 @@ import ilyatkachev.github.com.mycinema.movies.domain.usecase.GetMedia;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCaseHandler;
 
-public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObject> {
+public class MediaPresenter implements IMediaContract.Presenter<BaseMediaObject> {
 
     private static final String TAG = "MoviePresenter";
 
-    private final IMoviesContract.View mView;
+    private final IMediaContract.View mView;
     private final GetMedia mGetMedia;
     private final GetFavoriteMedia mGetFavoriteMedia;
     private final AddFavoriteMedia mAddFavoriteMedia;
@@ -26,17 +26,19 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
 
     private boolean mFirstLoad = true;
 
-    private final MoviesFilterType mMoviesFilterType;
+    private final MediaFilterType mMediaFilterType;
+    private final MediaType mMediaType;
     private int mCurrentPage;
     private final List<BaseMediaObject> mMovieList;
 
-    public MoviesPresenter(@NonNull final IMoviesContract.View pView, @NonNull final GetMedia pGetMedia, final GetFavoriteMedia pGetFavoriteMedia, final AddFavoriteMedia pAddFavoriteMedia, @NonNull final UseCaseHandler pUseCaseHandler, final MoviesFilterType pMoviesFilterType) {
+    public MediaPresenter(@NonNull final IMediaContract.View pView, @NonNull final GetMedia pGetMedia, final GetFavoriteMedia pGetFavoriteMedia, final AddFavoriteMedia pAddFavoriteMedia, @NonNull final UseCaseHandler pUseCaseHandler, final MediaType pMediaType, final MediaFilterType pMediaFilterType) {
         mView = pView;
         mGetMedia = pGetMedia;
         mGetFavoriteMedia = pGetFavoriteMedia;
         mAddFavoriteMedia = pAddFavoriteMedia;
         mUseCaseHandler = pUseCaseHandler;
-        mMoviesFilterType = pMoviesFilterType;
+        mMediaType = pMediaType;
+        mMediaFilterType = pMediaFilterType;
 
         mCurrentPage = 1;
         mMovieList = new ArrayList<>();
@@ -46,23 +48,23 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
 
     @Override
     public void start() {
-        loadMovies(false);
+        loadMedia(false);
     }
 
     @Override
-    public void loadMovies(final boolean forceUpdate) {
-        if (forceUpdate){
+    public void loadMedia(final boolean forceUpdate) {
+        if (forceUpdate) {
             mCurrentPage = 1;
         }
-        loadMovies(forceUpdate || mFirstLoad, true);
+        loadMedia(forceUpdate || mFirstLoad, true);
         mFirstLoad = false;
     }
 
-    private void loadMovies(final boolean pForceUpdate, final boolean pShowLoadingUI) {
+    private void loadMedia(final boolean pForceUpdate, final boolean pShowLoadingUI) {
         if (pShowLoadingUI) {
 
         }
-        final GetMedia.RequestValues requestValues = new GetMedia.RequestValues(mCurrentPage, mMoviesFilterType);
+        final GetMedia.RequestValues requestValues = new GetMedia.RequestValues(mMediaType, mCurrentPage, mMediaFilterType);
 
         mUseCaseHandler.execute(mGetMedia, requestValues, new UseCase.UseCaseCallback<GetMedia.ResponseValue>() {
 
@@ -74,7 +76,7 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
                 if (pShowLoadingUI) {
 
                 }
-                mView.showMovies(mMovieList);
+                mView.showMediaList(mMovieList);
             }
 
             @Override
@@ -87,12 +89,16 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
         });
     }
 
-    public MoviesFilterType getMoviesFilterType() {
-        return mMoviesFilterType;
+    public MediaFilterType getMediaFilterType() {
+        return mMediaFilterType;
+    }
+
+    public MediaType getMediaType() {
+        return mMediaType;
     }
 
     @Override
-    public List<BaseMediaObject> getMovieList() {
+    public List<BaseMediaObject> getMediaList() {
         return mMovieList;
     }
 
@@ -104,12 +110,12 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
 
             @Override
             public void onSuccess(final AddFavoriteMedia.ResponseValue pResponse) {
-                Log.d(TAG,"Favorite movie added to db");
+                Log.d(TAG, "Favorite movie added to db");
             }
 
             @Override
             public void onError() {
-                Log.d(TAG,"Cant add favorite to db");
+                Log.d(TAG, "Cant add favorite to db");
             }
         });
     }
@@ -121,12 +127,12 @@ public class MoviesPresenter implements IMoviesContract.Presenter<BaseMediaObjec
 
             @Override
             public void onSuccess(final GetFavoriteMedia.ResponseValue pResponse) {
-                mView.showFavoriteMovies(pResponse.getMediaList());
+                mView.showFavoriteMediaList(pResponse.getMediaList());
             }
 
             @Override
             public void onError() {
-                Log.d(TAG,"Cant load favorite from db");
+                Log.d(TAG, "Cant load favorite from db");
             }
         });
     }

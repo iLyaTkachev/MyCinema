@@ -40,13 +40,13 @@ public class CinemaRepository implements ICinemaDataSource {
     }
 
     @Override
-    public void getMedia(final BaseMediaResponse pMediaResponse, final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+    public void getMedia(final BaseMediaResponse pMediaResponse, final String pType, final int pPath, @NonNull final String pFilterType, @NonNull final LoadMediaCallback pCallback) {
         //First check local data source, if there are no movies with such page then use remote data source
-        getMediaFromLocalDataSource(pMediaResponse, pPath, pType, pCallback);
+        getMediaFromLocalDataSource(pMediaResponse, pType, pPath, pFilterType, pCallback);
     }
 
-    private void getMediaFromLocalDataSource(final BaseMediaResponse pMediaResponse, final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
-        mMoviesLocalDataSource.getMedia(pMediaResponse, pPath, pType, new LoadMediaCallback<BaseMediaResponse>() {
+    private void getMediaFromLocalDataSource(final BaseMediaResponse pMediaResponse, final String pType, final int pPath, @NonNull final String pFilterType, @NonNull final LoadMediaCallback pCallback) {
+        mMoviesLocalDataSource.getMedia(pMediaResponse, pType, pPath, pFilterType, new LoadMediaCallback<BaseMediaResponse>() {
 
             @Override
             public void onMediaLoaded(final BaseMediaResponse pResponse) {
@@ -55,13 +55,13 @@ public class CinemaRepository implements ICinemaDataSource {
 
             @Override
             public void onDataNotAvailable() {
-                getMediaFromRemoteDataSource(pMediaResponse, pPath, pType, pCallback);
+                getMediaFromRemoteDataSource(pMediaResponse, pType, pPath, pFilterType, pCallback);
             }
         });
     }
 
-    private void getMediaFromRemoteDataSource(final BaseMediaResponse pMediaResponse, final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
-        mMoviesRemoteDataSource.getMedia(pMediaResponse, pPath, pType, new LoadMediaCallback<BaseMediaResponse>() {
+    private void getMediaFromRemoteDataSource(final BaseMediaResponse pMediaResponse, final String pType, final int pPath, @NonNull final String pFilterType, @NonNull final LoadMediaCallback pCallback) {
+        mMoviesRemoteDataSource.getMedia(pMediaResponse, pType, pPath, pFilterType, new LoadMediaCallback<BaseMediaResponse>() {
 
             @Override
             public void onMediaLoaded(final BaseMediaResponse pResponse) {

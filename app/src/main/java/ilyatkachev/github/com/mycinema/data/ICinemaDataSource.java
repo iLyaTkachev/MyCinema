@@ -21,7 +21,7 @@ public interface ICinemaDataSource {
         void onDataNotAvailable();
     }
 
-    void getMedia(@NonNull BaseMediaResponse pResponse, @NonNull int pPath, @NonNull String pType, @NonNull LoadMediaCallback pCallback);
+    void getMedia(@NonNull BaseMediaResponse pResponse,@NonNull String pType, @NonNull int pPage, @NonNull String pFilterType, @NonNull LoadMediaCallback pCallback);
 
     void getMedia(@NonNull String pMovieId, @NonNull GetMediaCallback pCallback);
 

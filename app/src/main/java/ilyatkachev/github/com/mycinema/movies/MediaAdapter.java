@@ -9,29 +9,29 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.R;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 
-public class MovieAdapter extends RecyclerView.Adapter<MovieHolder> {
+public class MediaAdapter extends RecyclerView.Adapter<MediaHolder> {
 
-    private List<Movie> mMovies;
+    private List<BaseMediaObject> mMovies;
     private Context mContext;
-    private IMovieCardListener mMovieCardListener;
+    private IMediaCardListener mMovieCardListener;
 
-    public MovieAdapter(final Context pContext, final List<Movie> pMovies, final IMovieCardListener pMovieCardListener) {
-        mMovies = pMovies;
+    public MediaAdapter(final Context pContext, final List<BaseMediaObject> pMediaObjects, final IMediaCardListener pMovieCardListener) {
+        mMovies = pMediaObjects;
         mContext = pContext;
         mMovieCardListener = pMovieCardListener;
     }
 
     @Override
-    public MovieHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
+    public MediaHolder onCreateViewHolder(final ViewGroup parent, final int viewType) {
         final View view = LayoutInflater.from(mContext).inflate(R.layout.movie_card, parent, false);
-        return new MovieHolder(view);
+        return new MediaHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final MovieHolder holder, final int position) {
-        final Movie movie = mMovies.get(position);
+    public void onBindViewHolder(final MediaHolder holder, final int position) {
+        final BaseMediaObject movie = mMovies.get(position);
         holder.bindMovie(movie, mMovieCardListener);
     }
 

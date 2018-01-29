@@ -37,7 +37,7 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     }
 
     @Override
-    public void getMedia(@NonNull final BaseMediaResponse pMediaResponse, @NonNull final int pPath, @NonNull final String pType, @NonNull final LoadMediaCallback pCallback) {
+    public void getMedia(@NonNull final BaseMediaResponse pMediaResponse, @NonNull final String pType, @NonNull final int pPath, @NonNull final String pFilterType, @NonNull final LoadMediaCallback pCallback) {
         pCallback.onDataNotAvailable();
     }
 
@@ -49,17 +49,19 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     @Override
     public void getFavoriteMedia(@NonNull final LoadMediaCallback pCallback) {
         final Runnable runnable = new Runnable() {
+
             @Override
             public void run() {
                 final List<Movie> movies = mMoviesDao.getMovies();
                 mAppExecutors.getMainThread().execute(new Runnable() {
+
                     @Override
                     public void run() {
                         if (movies.isEmpty()) {
                             // This will be called if the table is new or just empty.
                             pCallback.onDataNotAvailable();
                         } else {
-                            pCallback.onMediaLoaded(new MoviesResponse(0,0,0,movies));
+                            pCallback.onMediaLoaded(new MoviesResponse(0, 0, 0, movies));
                         }
                     }
                 });
@@ -72,9 +74,10 @@ public class CinemaLocalDataSource implements ICinemaDataSource {
     @Override
     public void addFavoriteMedia(@NonNull final BaseMediaObject pMediaObject) {
         final Runnable runnable = new Runnable() {
+
             @Override
             public void run() {
-                mMoviesDao.insertMovie((Movie)pMediaObject);
+                mMoviesDao.insertMovie((Movie) pMediaObject);
             }
         };
         mAppExecutors.getDiskIO().execute(runnable);
