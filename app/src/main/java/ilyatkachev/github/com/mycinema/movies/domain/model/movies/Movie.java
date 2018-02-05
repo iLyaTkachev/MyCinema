@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.movies.domain.model;
+package ilyatkachev.github.com.mycinema.movies.domain.model.movies;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;

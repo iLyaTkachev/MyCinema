@@ -2,11 +2,8 @@ package ilyatkachev.github.com.mycinema.data;
 
 import android.support.annotation.NonNull;
 
-import java.util.List;
-
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.NotNull;
 
 /**

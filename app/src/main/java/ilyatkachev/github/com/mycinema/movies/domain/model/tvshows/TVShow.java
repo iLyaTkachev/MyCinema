@@ -1,4 +1,4 @@
-package ilyatkachev.github.com.mycinema.tvshows;
+package ilyatkachev.github.com.mycinema.movies.domain.model.tvshows;
 
 import com.google.gson.annotations.SerializedName;
 

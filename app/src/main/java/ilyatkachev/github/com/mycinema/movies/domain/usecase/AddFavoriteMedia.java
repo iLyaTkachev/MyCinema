@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import ilyatkachev.github.com.mycinema.data.CinemaRepository;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 
 public class AddFavoriteMedia extends UseCase<AddFavoriteMedia.RequestValues, AddFavoriteMedia.ResponseValue>{

@@ -1,6 +1,7 @@
 package ilyatkachev.github.com.mycinema.movies;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -33,6 +34,7 @@ public class MediaActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private MediaType mMediaType;
     private ViewPager mViewPager;
+    private TextView mToolbarTitle;
 
     String[] movieGenresList;
     boolean[] checkedGenres;
@@ -43,6 +45,9 @@ public class MediaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
         ImageLoaderWrapper.setConfig(getCacheDir());
+
+        //Intent intent = getIntent();
+        //mMediaType = (MediaType) intent.getSerializableExtra(Constants.TYPE_KEY);
 
         if (savedInstanceState != null) {
             mMediaType = (MediaType) savedInstanceState.getSerializable(Constants.TYPE_KEY);
@@ -90,8 +95,8 @@ public class MediaActivity extends AppCompatActivity {
 
     private void setupToolbar(final Toolbar pToolbar) {
         pToolbar.setTitle(R.string.empty_string);
-        final TextView toolbarTitle = findViewById(R.id.toolbar_title);
-        toolbarTitle.setText(mMediaType.toString());
+        mToolbarTitle = findViewById(R.id.toolbar_title);
+        mToolbarTitle.setText(mMediaType.toString());
         setSupportActionBar(pToolbar);
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
@@ -185,15 +190,16 @@ public class MediaActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void setupViewPager(final ViewPager viewPager) {
+    private void setupViewPager(final ViewPager pViewPager) {
         //during rotation adapter first check FragementManager, if there no such fragment, then it takes fragment from the list
+
         final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
 
         for (int i = 0; i < mMediaType.getFilterTypes().length; i++) {
             MediaFilterType mediaFilterType = mMediaType.getFilterTypes()[i];
             adapter.addFragment(createFragmentWithPresenter(mMediaType, mediaFilterType), mediaFilterType.toString());
         }
-        viewPager.setAdapter(adapter);
+        pViewPager.setAdapter(adapter);
     }
 
     private Fragment createFragmentWithPresenter(final MediaType pMediaType, final MediaFilterType pFilterType) {
@@ -214,11 +220,18 @@ public class MediaActivity extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case R.id.movies_navigation_menu_item:
                 mMediaType = MediaType.MOVIE;
+                updateActivity();
                 setupViewPager(mViewPager);
                 break;
             case R.id.tv_shows_navigation_menu_item:
+                //Intent intent = new Intent(this, MediaActivity.class);
+                //intent.putExtra(Constants.TYPE_KEY, MediaType.TV);
+                //startActivity(intent);
+
                 mMediaType = MediaType.TV;
+                updateActivity();
                 setupViewPager(mViewPager);
+
                 break;
             case R.id.people_navigation_menu_item:
                 //fragmentClass = ThirdFragment.class;
@@ -242,6 +255,10 @@ public class MediaActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawerLayout.closeDrawers();
+    }
+
+    private void updateActivity() {
+        mToolbarTitle.setText(mMediaType.toString());
     }
 
     @Override

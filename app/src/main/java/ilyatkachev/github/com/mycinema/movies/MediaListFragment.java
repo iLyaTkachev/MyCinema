@@ -21,7 +21,7 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import ilyatkachev.github.com.mycinema.R;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.movieDetails.MovieDetailsActivity;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
+import ilyatkachev.github.com.mycinema.movies.domain.model.movies.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.GridSpacingItemDecoration;
 import ilyatkachev.github.com.mycinema.util.RVOnScrollListener;

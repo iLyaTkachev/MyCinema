@@ -8,8 +8,8 @@ import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.local.db.MoviesDao;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
-import ilyatkachev.github.com.mycinema.movies.domain.model.MoviesResponse;
+import ilyatkachev.github.com.mycinema.movies.domain.model.movies.Movie;
+import ilyatkachev.github.com.mycinema.movies.domain.model.movies.MoviesResponse;
 import ilyatkachev.github.com.mycinema.util.executors.AppExecutors;
 
 public class CinemaLocalDataSource implements ICinemaDataSource {

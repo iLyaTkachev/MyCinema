@@ -11,7 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import ilyatkachev.github.com.mycinema.R;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
+import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
+import ilyatkachev.github.com.mycinema.movies.domain.model.movies.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.ImageLoaderWrapper;
 
@@ -20,7 +21,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private AppBarLayout mAppBarLayout;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
 
-    private Movie mMovie;
+    private BaseMediaObject mMovie;
 
     private ImageView mPosterImageView;
     private ImageView mBackdropImageView;
@@ -48,7 +49,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_details);
 
         final Intent intent = getIntent();
-        mMovie = (Movie) intent.getSerializableExtra(Constants.MOVIE_OBJECT);
+        mMovie = (BaseMediaObject) intent.getSerializableExtra(Constants.MOVIE_OBJECT);
 
         final Toolbar toolbar = findViewById(R.id.movie_detail_toolbar);
         setSupportActionBar(toolbar);
@@ -98,7 +99,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         mYearTextView.setText(mMovie.getReleaseYear());
         mRatingTextView.setText(String.valueOf(mMovie.getVoteAverage()));
         mOverviewTextView.setText(mMovie.getOverview());
-        mDetailsTextView.setText(mMovie.getReleaseDate());
+        //mDetailsTextView.setText(mMovie.getReleaseDate());
         ImageLoaderWrapper.loadImage(Constants.ApiValues.IMAGE_LOADING_BASE_URL_342 + mMovie.getPosterPath(), mPosterImageView);
         ImageLoaderWrapper.loadImage(Constants.ApiValues.IMAGE_LOADING_BASE_URL_1000 + mMovie.getBackdropPath(), mBackdropImageView);
     }

@@ -2,12 +2,6 @@ package ilyatkachev.github.com.mycinema.data.remote.api;
 
 import android.net.Uri;
 
-import java.net.URI;
-import java.net.URL;
-import java.util.List;
-
-import ilyatkachev.github.com.mycinema.http.HttpClient;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.SecretConstants;
 

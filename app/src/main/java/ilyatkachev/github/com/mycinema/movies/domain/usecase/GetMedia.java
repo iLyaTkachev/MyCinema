@@ -10,8 +10,8 @@ import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
 import ilyatkachev.github.com.mycinema.movies.MediaFilterType;
 import ilyatkachev.github.com.mycinema.movies.MediaType;
-import ilyatkachev.github.com.mycinema.movies.domain.model.MoviesResponse;
-import ilyatkachev.github.com.mycinema.tvshows.TVShowsResponse;
+import ilyatkachev.github.com.mycinema.movies.domain.model.movies.MoviesResponse;
+import ilyatkachev.github.com.mycinema.movies.domain.model.tvshows.TVShowsResponse;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 
 public class GetMedia extends UseCase<GetMedia.RequestValues, GetMedia.ResponseValue> {

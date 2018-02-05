@@ -8,7 +8,6 @@ import ilyatkachev.github.com.mycinema.data.CinemaRepository;
 import ilyatkachev.github.com.mycinema.data.ICinemaDataSource;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaObject;
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
 import ilyatkachev.github.com.mycinema.util.usecase.UseCase;
 
 public class GetFavoriteMedia extends UseCase<GetFavoriteMedia.RequestValues, GetFavoriteMedia.ResponseValue> {

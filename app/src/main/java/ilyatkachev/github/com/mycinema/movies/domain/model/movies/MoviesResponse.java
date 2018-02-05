@@ -1,10 +1,11 @@
-package ilyatkachev.github.com.mycinema.movies.domain.model;
+package ilyatkachev.github.com.mycinema.movies.domain.model.movies;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
 import ilyatkachev.github.com.mycinema.data.remote.gson.BaseMediaResponse;
+import ilyatkachev.github.com.mycinema.movies.domain.model.movies.Movie;
 
 public class MoviesResponse extends BaseMediaResponse {
 

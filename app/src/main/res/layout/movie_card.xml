@@ -37,20 +37,21 @@
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
             android:paddingTop="4dp"
-            android:textSize="15sp"
+            android:paddingBottom="4dp"
+            android:textSize="13sp"
             tools:text="Title"/>
 
         <TextView
             android:id="@+id/card_movie_year_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/card_movie_title_text_view"
+            android:layout_above="@id/overflow"
+            android:layout_alignParentRight="true"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingBottom="8dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingRight="4dp"
             android:textSize="12sp"
+            android:textColor="@color/cardview_light_background"
             tools:text="2017"/>
 
         <ImageView
@@ -59,11 +60,13 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@id/movie_card_poster_image_view"
+            android:layout_marginBottom="8dp"
             android:layout_marginRight="4dp"
             android:layout_marginTop="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:clickable="true"
             android:scaleType="centerCrop"
+            android:tint="@color/cardview_dark_background"
             android:src="@drawable/ic_more_vert"/>
     </RelativeLayout>
 

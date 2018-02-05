@@ -5,7 +5,7 @@ import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
 
-import ilyatkachev.github.com.mycinema.movies.domain.model.Movie;
+import ilyatkachev.github.com.mycinema.movies.domain.model.movies.Movie;
 
 @Database(entities = {Movie.class}, version = 1)
 public abstract class MoviesDatabase extends RoomDatabase {
