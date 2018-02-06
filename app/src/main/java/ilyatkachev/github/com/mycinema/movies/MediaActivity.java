@@ -1,13 +1,11 @@
 package ilyatkachev.github.com.mycinema.movies;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
@@ -26,14 +24,12 @@ import java.util.List;
 import ilyatkachev.github.com.mycinema.R;
 import ilyatkachev.github.com.mycinema.util.Constants;
 import ilyatkachev.github.com.mycinema.util.ImageLoaderWrapper;
-import ilyatkachev.github.com.mycinema.util.Injection;
-import ilyatkachev.github.com.mycinema.util.ViewPagerAdapter;
 
 public class MediaActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private MediaType mMediaType;
-    private ViewPager mViewPager;
+    private ViewPagerWrapper mViewPagerWrapper;
     private TextView mToolbarTitle;
 
     String[] movieGenresList;
@@ -46,14 +42,12 @@ public class MediaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movies);
         ImageLoaderWrapper.setConfig(getCacheDir());
 
-        //Intent intent = getIntent();
-        //mMediaType = (MediaType) intent.getSerializableExtra(Constants.TYPE_KEY);
-
         if (savedInstanceState != null) {
             mMediaType = (MediaType) savedInstanceState.getSerializable(Constants.TYPE_KEY);
         } else {
             mMediaType = MediaType.MOVIE;
         }
+        setUpViewPagerWrapper();
 
         // Set up the custom toolbar.
         final Toolbar toolbar = findViewById(R.id.toolbar);
@@ -69,13 +63,7 @@ public class MediaActivity extends AppCompatActivity {
             setupDrawerContent(nvDrawer);
         }
 
-        mViewPager = findViewById(R.id.view_pager);
-        if (mViewPager != null) {
-            setupViewPager(mViewPager);
-        }
-
-        final TabLayout tabLayout = findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
+        //replaceFragmentInContainer(R.id.fragments_cont, new ViewPagerWrapper());
 
         movieGenresList = getResources().getStringArray(R.array.movie_genres);
         checkedGenres = new boolean[movieGenresList.length];
@@ -190,38 +178,12 @@ public class MediaActivity extends AppCompatActivity {
         dialog.show();
     }
 
-    private void setupViewPager(final ViewPager pViewPager) {
-        //during rotation adapter first check FragementManager, if there no such fragment, then it takes fragment from the list
-
-        final ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        for (int i = 0; i < mMediaType.getFilterTypes().length; i++) {
-            MediaFilterType mediaFilterType = mMediaType.getFilterTypes()[i];
-            adapter.addFragment(createFragmentWithPresenter(mMediaType, mediaFilterType), mediaFilterType.toString());
-        }
-        pViewPager.setAdapter(adapter);
-    }
-
-    private Fragment createFragmentWithPresenter(final MediaType pMediaType, final MediaFilterType pFilterType) {
-        final MediaListFragment fragment = new MediaListFragment();
-        final MediaPresenter mediaPresenter = new MediaPresenter(
-                fragment,
-                Injection.provideGetMedia(getApplicationContext()),
-                Injection.provideGetFavoriteMedia(getApplicationContext()),
-                Injection.provideAddFavoriteMedia(getApplicationContext()),
-                Injection.provideUseCaseHandler(),
-                pMediaType,
-                pFilterType);
-
-        return fragment;
-    }
-
     public void selectDrawerItem(final MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.movies_navigation_menu_item:
                 mMediaType = MediaType.MOVIE;
                 updateActivity();
-                setupViewPager(mViewPager);
+                setUpViewPagerWrapper();
                 break;
             case R.id.tv_shows_navigation_menu_item:
                 //Intent intent = new Intent(this, MediaActivity.class);
@@ -230,7 +192,7 @@ public class MediaActivity extends AppCompatActivity {
 
                 mMediaType = MediaType.TV;
                 updateActivity();
-                setupViewPager(mViewPager);
+                setUpViewPagerWrapper();
 
                 break;
             case R.id.people_navigation_menu_item:
@@ -261,6 +223,23 @@ public class MediaActivity extends AppCompatActivity {
         mToolbarTitle.setText(mMediaType.toString());
     }
 
+    private void setUpViewPagerWrapper(){
+        mViewPagerWrapper = (ViewPagerWrapper) getSupportFragmentManager().findFragmentByTag(mMediaType.toString());
+        if (mViewPagerWrapper == null){
+            Bundle bundle = new Bundle();
+            bundle.putSerializable(Constants.TYPE_KEY, mMediaType);
+            mViewPagerWrapper = new ViewPagerWrapper();
+            mViewPagerWrapper.setArguments(bundle);
+        }
+        replaceFragmentInContainer(R.id.fragments_cont, mViewPagerWrapper);
+    }
+
+    private void replaceFragmentInContainer(final int pI, final Fragment pFragment) {
+        final FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(pI, pFragment, mMediaType.toString());
+        fragmentTransaction.commit();
+    }
+
     @Override
     public void onBackPressed() {
         final DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -272,7 +251,7 @@ public class MediaActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(final Bundle outState) {
         outState.putSerializable(Constants.TYPE_KEY, mMediaType);
         super.onSaveInstanceState(outState);
     }

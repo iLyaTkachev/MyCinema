@@ -21,4 +21,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
+    <style name="ViewPagerTab" parent="Widget.Design.TabLayout">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabTextColor">@android:color/darker_gray</item>
+        <item name="tabGravity">fill</item>
+        <item name="tabIndicatorColor">@color/colorAccent</item>
+    </style>
 </resources>
